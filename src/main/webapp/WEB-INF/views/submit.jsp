@@ -9,32 +9,55 @@
    <!--   <link rel="stylesheet" type="text/css" href="/easyui/demo/demo.css">-->
     <script type="text/javascript" src="/easyui/jquery.min.js"></script>
     <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript">
+		$(document).ready(function(){
+			$("#date").datebox('setValue', parsedate());
+		});
+		
+		function parsedate(){  
+		    var date = new Date();  
+		    var year = date.getFullYear();  
+		    var month = date.getMonth()+1; //start from 0     
+		    var day = date.getDate();   
+		    return  day+"/"+month+"/"+year;  
+		}  
+</script>
 </head>
+
+
 <body>
-    <h2>报单系统</h2>
-    <div class="demo-info" style="margin-bottom:10px">
-        <div class="demo-tip icon-tip">&nbsp;</div>
-        <div>Type in input box and submit the form.</div>
-    </div>
-    
+    <h2>报单系统</h2>    
     <div class="easyui-panel" title="Ajax Form" style="width:300px;padding:10px;">
-        <form id="ff" action="tess4j/test/" method="post" enctype="multipart/form-data">
+        <form id="ff" action="tess4j/submit/" method="post" enctype="multipart/form-data">
             <table>
                 <tr>
-                    <td>Name:</td>
+                    <td>扫码日期:</td>
+                    <td>
+                    <input id="date" name ="date" class="f1 easyui-datebox"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>姓名:</td>
                     <td><input name="name" class="f1 easyui-textbox"></input></td>
                 </tr>
                 <tr>
-                    <td>Email:</td>
-                    <td><input name="email" class="f1 easyui-textbox"></input></td>
+                    <td>群昵称:</td>
+                    <td><input name="name" class="f1 easyui-textbox"></input></td>
                 </tr>
-                <tr>
-                    <td>Phone:</td>
-                    <td><input name="phone" class="f1 easyui-textbox"></input></td>
-                </tr>
-                <tr>
-                    <td>File:</td>
-                    <td><input name="file" class="f1 easyui-filebox"></input></td>
+				<tr>
+					<td>订单号(阿信/阿联/阿宝):</td>
+					<td><input name="file" class="f1 easyui-filebox"></input></td>
+				</tr>
+				<tr>
+                    <td>商户名:</td>
+                    <td>
+                       <select name="merchants" class="f1 easyui-combobox"  >
+		                <option value="">请选择</option>
+		                <option value="AK">得利家用</option>
+		                <option value="AZ">尚卫三</option>
+		                <option value="AR">通盛摩托</option>
+		            </select>
+                    </td>
                 </tr>
                 <tr>
                     <td></td>
