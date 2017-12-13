@@ -10,6 +10,10 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+
 public class Image {
     /**
      * 读取一张图片的RGB值
@@ -70,10 +74,10 @@ public class Image {
      * @param args
      */
     public static void main(String[] args) throws Exception {
-        int x = 0;
-        Image rc = new Image();
-        x = rc.getScreenPixel(100, 345);
-        System.out.println(x + " - ");
-        rc.getImagePixel("D:\\xiao.jpg");
+//        int x = 0;
+//        Image rc = new Image();
+//        x = rc.getScreenPixel(100, 345);
+//        System.out.println(x + " - ");
+//        rc.getImagePixel("D:\\xiao.jpg");
     }
 }
