@@ -19,10 +19,9 @@
                 <div class="m-title">报单系统</div>
 
         </header>
-        <form id="ff">
+        <form id="ff" action="tess4j/submit/" method="post" enctype="multipart/form-data">
             <div style="margin-bottom:10px">
-               <select name="feilv" class="easyui-combobox" label="是否参与助攻:" style="width:100%" >
-		                <option value="">请选择</option>
+               <select id="box-rate" name="box-rate" class="easyui-combobox" label="是否参与助攻:" data-options="required:true" style="width:100%" >
 		                <option value="0.25">是，记入月底助攻金额</option>
 		                <option value="0.4">否，选择高费率自用</option>、
 		                <option value="0.1">幸运星待遇</option>
@@ -31,10 +30,10 @@
 		            </select>
             </div>
             <div style="margin-bottom:10px">
-                <input class="easyui-filebox" label="订单截图:" prompt="" style="width:100%">
+                <input id="file-order" name="file-order" class="easyui-filebox" label="订单截图:" data-options="required:true" prompt="" style="width:100%">
             </div>
-            <div style="margin-bottom:10px">
-                <a href="#" class="easyui-linkbutton" style="width:100%">上传</a>
+            <div style="margin-bottom:20px">
+                <a class="easyui-linkbutton" style="width:100%" onclick="$('#ff').submit()">提交</a>
             </div>
         </form>
     </div>

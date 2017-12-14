@@ -8,6 +8,6 @@ public class IndexController {
 
 	@RequestMapping(value={"","/","index"})
 	public String index(){
-		return "mobileForm1.jsp";
+		return "mobileForm1";
 	}
 }
