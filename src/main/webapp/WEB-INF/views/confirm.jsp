@@ -12,8 +12,6 @@
     <script type="text/javascript">
 		$(document).ready(function(){
 			$("#date").datebox('setValue', parsedate());
-			var orderDetail = '${billDetail}';
-			$("#nickName").textbox('setValue', orderDetail.nickName);
 		});
 		
 		function parsedate(){  
@@ -36,7 +34,7 @@
                 <tr>
                     <td>扫码日期:</td>
                     <td>
-                    <input id="date" name ="date"  class="f1 easyui-datebox"></input>
+                    <input id="date" name ="date" class="f1 easyui-datebox"></input>
                     </td>
                 </tr>
                 <tr>
@@ -45,12 +43,12 @@
                 </tr>
                 <tr>
                     <td>群昵称:</td>
-                    <td><input id="nickName" name="nickName" class="f1 easyui-textbox"></input></td>
+                    <td><input name="name" class="f1 easyui-textbox"></input></td>
                 </tr>
-                <tr>
-                    <td>订单号:</td>
-                    <td><input id="orderNum" name="orderNum" class="f1 easyui-textbox"></input></td>
-                </tr>
+				<tr>
+					<td>订单号(阿信/阿联/阿宝):</td>
+					<td><input name="file" class="f1 easyui-filebox"></input></td>
+				</tr>
 				<tr>
                     <td>商户名:</td>
                     <td>

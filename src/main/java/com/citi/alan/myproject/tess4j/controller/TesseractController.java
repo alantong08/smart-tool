@@ -2,7 +2,6 @@ package com.citi.alan.myproject.tess4j.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,7 +15,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.citi.alan.myproject.tess4j.model.BillOrderDetail;
 import com.citi.alan.myproject.tess4j.service.api.BillOrderDetectorService;
+import com.citi.alan.myproject.tess4j.util.DateUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import net.sourceforge.tess4j.TesseractException;
 
@@ -27,21 +30,24 @@ public class TesseractController {
     @Value("${upload.file.path}")
     private String uploadFilePath;
     
+    private final static String DATE_PATTERN="yyyyMMddHHmmssSSS";
+    
     @Autowired
     private BillOrderDetectorService billOrderDetectorService;
 
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
     @ResponseBody
-    public ModelAndView handleFileUpload(HttpServletRequest request, ModelAndView mv) {
+    public ModelAndView handleFileUpload(HttpServletRequest request, ModelAndView mv) throws JsonProcessingException {
+        BillOrderDetail detail = null;
         try {
             String rate = request.getParameter("box-rate");
             MultipartFile file = ((MultipartHttpServletRequest) request).getFile("file-order");
             String originalFileName = file.getOriginalFilename();
             if (file != null && originalFileName != null && originalFileName.length() > 0) {
-                String newFileName = UUID.randomUUID() + originalFileName.substring(originalFileName.lastIndexOf("."));
+                String newFileName = DateUtil.getFormatDateStr(DATE_PATTERN) + originalFileName.substring(originalFileName.lastIndexOf("."));
                 File newFile = new File(uploadFilePath + newFileName);
                 file.transferTo(newFile);
-                billOrderDetectorService.detetctBillOrderDetail(newFile);
+                detail = billOrderDetectorService.detetctBillOrderDetail(newFile, rate);
                 
             }
         } catch (Exception se) {
@@ -49,6 +55,10 @@ public class TesseractController {
         }
 
         ModelAndView mView = new ModelAndView("submit");
+        ObjectMapper objectMapper = new ObjectMapper();
+       String json =  objectMapper.writeValueAsString(detail);
+        
+        mView.addObject("billDetail", json);
         return mView;
 
     }

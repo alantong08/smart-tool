@@ -1,5 +1,7 @@
 package com.citi.alan.myproject.tess4j.model;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 public class BillOrderDetail {
 
     private String date;
@@ -57,6 +59,12 @@ public class BillOrderDetail {
     }
     public void setComments(String comments) {
         this.comments = comments;
+    }
+    
+    @Override
+    public String toString(){
+        return ToStringBuilder.reflectionToString(this);
+      
     }
     
     
