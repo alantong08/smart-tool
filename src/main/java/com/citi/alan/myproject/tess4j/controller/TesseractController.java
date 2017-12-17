@@ -26,48 +26,56 @@ import net.sourceforge.tess4j.TesseractException;
 @RestController
 @RequestMapping("/tess4j")
 public class TesseractController {
-    
-    @Value("${upload.file.path}")
-    private String uploadFilePath;
-    
-    private final static String DATE_PATTERN="yyyyMMddHHmmssSSS";
-    
-    @Autowired
-    private BillOrderDetectorService billOrderDetectorService;
 
-    @RequestMapping(value = "/submit", method = RequestMethod.POST)
-    @ResponseBody
-    public ModelAndView handleFileUpload(HttpServletRequest request, ModelAndView mv) throws JsonProcessingException {
-        BillOrderDetail detail = null;
-        try {
-            String rate = request.getParameter("box-rate");
-            MultipartFile file = ((MultipartHttpServletRequest) request).getFile("file-order");
-            String originalFileName = file.getOriginalFilename();
-            if (file != null && originalFileName != null && originalFileName.length() > 0) {
-                String newFileName = DateUtil.getFormatDateStr(DATE_PATTERN) + originalFileName.substring(originalFileName.lastIndexOf("."));
-                File newFile = new File(uploadFilePath + newFileName);
-                file.transferTo(newFile);
-                detail = billOrderDetectorService.detetctBillOrderDetail(newFile, rate);
-                
-            }
-        } catch (Exception se) {
-            se.printStackTrace();
-        }
+	@Value("${upload.file.path}")
+	private String uploadFilePath;
 
-        ModelAndView mView = new ModelAndView("submit");
-        ObjectMapper objectMapper = new ObjectMapper();
-       String json =  objectMapper.writeValueAsString(detail);
-        
-        mView.addObject("billDetail", json);
-        return mView;
+	private final static String DATE_PATTERN = "yyyyMMddHHmmssSSS";
 
-    }
+	@Autowired
+	private BillOrderDetectorService billOrderDetectorService;
 
-    @RequestMapping(value = "/test")
-    @ResponseBody
-    String test() throws IOException, TesseractException {
-        // return tessercatUtil.parseImage();
-        return null;
-    }
+	@RequestMapping(value = "/submit", method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView handleUploadFile(HttpServletRequest request) throws JsonProcessingException {
+		BillOrderDetail detail = null;
+		try {
+			String activityType = request.getParameter("activityType");
+			MultipartFile file = ((MultipartHttpServletRequest) request).getFile("file-order");
+			String originalFileName = file.getOriginalFilename();
+			if (file != null && originalFileName != null && originalFileName.length() > 0) {
+				String newFileName = DateUtil.getFormatDateStr(DATE_PATTERN)
+						+ originalFileName.substring(originalFileName.lastIndexOf("."));
+				File newFile = new File(uploadFilePath + newFileName);
+				file.transferTo(newFile);
+				detail = billOrderDetectorService.detetctBillOrderDetail(newFile, activityType);
+			}
+		} catch (Exception se) {
+			se.printStackTrace();
+		}
+
+		ModelAndView mView = new ModelAndView("confirm");
+		ObjectMapper objectMapper = new ObjectMapper();
+		String json = objectMapper.writeValueAsString(detail);
+		mView.addObject("billDetail", json);
+		return mView;
+	}
+
+	@RequestMapping(value = "/test")
+	@ResponseBody
+	ModelAndView test() throws IOException, TesseractException {
+
+		BillOrderDetail billOrderDetail = new BillOrderDetail();
+		billOrderDetail.setRate("0.3");
+		billOrderDetail.setActivityType("高端群特供噜卡");
+		billOrderDetail.setName("Mr Tong");
+		billOrderDetail.setNickName("兔少");
+		
+		ModelAndView mView = new ModelAndView("submit");
+		ObjectMapper objectMapper = new ObjectMapper();
+		String json = objectMapper.writeValueAsString(billOrderDetail);
+		mView.addObject("billDetail", json);
+		return mView;
+	}
 
 }

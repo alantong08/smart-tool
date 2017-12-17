@@ -1,85 +1,101 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title报单系统</title>
-    <link rel="stylesheet" type="text/css" href="/easyui/themes/bootstrap/easyui.css">
-    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
-   <!--   <link rel="stylesheet" type="text/css" href="/easyui/demo/demo.css">-->
-    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
-    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
-    <script type="text/javascript">
-		$(document).ready(function(){
-			$("#date").datebox('setValue', parsedate());
-		});
-		
-		function parsedate(){  
-		    var date = new Date();  
-		    var year = date.getFullYear();  
-		    var month = date.getMonth()+1; //start from 0     
-		    var day = date.getDate();   
-		    return (month<10 ? '0' : '') + month + '/' +
-		    (day<10 ? '0' : '') + day+"/"+year;
-		}  
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>报单系统</title>
+<link rel="stylesheet" type="text/css"
+	href="/easyui/themes/metro/easyui.css">
+<link rel="stylesheet" type="text/css" href="/easyui/themes/mobile.css">
+<link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+<script type="text/javascript" src="/easyui/jquery.min.js"></script>
+<script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/easyui/jquery.easyui.mobile.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var orderDetail = jQuery.parseJSON('${billDetail}');
+		$("#date").datebox('setValue', orderDetail.date);
+		$("#name").textbox('setValue', orderDetail.name);
+		$("#nickName").textbox('setValue', orderDetail.nickName);
+		$("#orderNum").textbox('setValue', orderDetail.orderNum);
+		$("#merchantName").textbox('setValue', orderDetail.merchantName);
+		$("#actualPrice").textbox('setValue', orderDetail.actualPrice);
+		$("#transferType").combobox('setValue', orderDetail.transferType);
+		$("#activityType").combobox('setValue', orderDetail.activityType);
+		$("#rate").textbox('setValue', orderDetail.rate);
+		$("#alipayAccount").textbox('setValue', orderDetail.alipayAccount);
+	});
 </script>
 </head>
-
-
 <body>
-    <h2>报单系统</h2>    
-    <div class="easyui-panel" title="Ajax Form" style="width:300px;padding:10px;">
-        <form id="ff" action="tess4j/submit/" method="post" enctype="multipart/form-data">
-            <table>
-                <tr>
-                    <td>扫码日期:</td>
-                    <td>
-                    <input id="date" name ="date" class="f1 easyui-datebox"></input>
-                    </td>
-                </tr>
-                <tr>
-                    <td>姓名:</td>
-                    <td><input name="name" class="f1 easyui-textbox"></input></td>
-                </tr>
-                <tr>
-                    <td>群昵称:</td>
-                    <td><input name="name" class="f1 easyui-textbox"></input></td>
-                </tr>
-				<tr>
-					<td>订单号(阿信/阿联/阿宝):</td>
-					<td><input name="file" class="f1 easyui-filebox"></input></td>
-				</tr>
-				<tr>
-                    <td>商户名:</td>
-                    <td>
-                       <select name="merchants" class="f1 easyui-combobox"  >
-		                <option value="">请选择</option>
-		                <option value="AK">得利家用</option>
-		                <option value="AZ">尚卫三</option>
-		                <option value="AR">通盛摩托</option>
-		            </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" value="Submit"></input></td>
-                </tr>
-            </table>
-        </form>
-    </div>
-    <style scoped>
-        .f1{
-            width:200px;
-        }
-    </style>
-    <script type="text/javascript">
-        $(function(){
-            $('#ff').form({
-                success:function(data){
-                    $.messager.alert('Info', data, 'info');
-                }
-            });
-        });
-    </script>
+	<div class="easyui-navpanel" style="position: relative; padding: 20px">
+		<header>
+			<div class="m-toolbar">
+				<div class="m-title">报单数据确认</div>
+		</header>
+		<form id="ff" action="tess4j/saveForm/" method="post">
+			<div style="margin-bottom: 10px">
+				<input id="date" name="date" class="easyui-datebox" label="扫码日期:"
+					data-options="required:true" style="width: 100%"></input>
+			</div>
+			<div style="margin-bottom: 10px">
+				<input id="name" name="name" class="easyui-textbox"
+					data-options="required:true" label="姓名:" style="width: 100%"></input>
+			</div>
+			<div style="margin-bottom: 10px">
+				<input id="nickName" name="nickName" class="easyui-textbox"
+					data-options="required:true" label="群昵称:" style="width: 100%"></input>
+			</div>
+			<div style="margin-bottom: 10px">
+				<input id="orderNum" name="" orderNum"" class="easyui-textbox"
+					data-options="required:true" label="订单号:" style="width: 100%"></input>
+			</div>
+			<div style="margin-bottom: 10px">
+				<input id="merchantName" name="merchantName" class="easyui-textbox"
+					data-options="required:true" label="商户名" style="width: 100%"></input>
+			</div>
+			<div style="margin-bottom: 10px">
+				<input id="actualPrice" name="actualPrice" class="easyui-textbox"
+					data-options="required:true" label="扫码金额:" style="width: 100%"></input>
+			</div>
+			<div style="margin-bottom: 10px">
+				<select id="transferType" name="transferType"
+					class="easyui-combobox" label="交易方式:" data-options="required:true"
+					style="width: 100%">
+					<option value="1">融E联</option>
+					<option value="2">微信</option>
+					<option value="3">支付宝</option>
+				</select>
+			</div>
+			<div style="margin-bottom: 10px">
+				<select id="activityType" name="activityType"
+					class="easyui-combobox" label="是否参与助攻:"
+					data-options="required:true" style="width: 100%">
+					<option value="1">是，记入月底助攻金额</option>
+					<option value="2">否，选择高费率自用</option>
+					<option value="3">幸运星待遇</option>
+					<option value="4">高端群特供撸卡</option>
+					<option value="5">小娇周周特别活动0.1</option>
+				</select>
+			</div>
+			<div style="margin-bottom: 10px">
+				<input id="rate" name="rate" class="easyui-textbox"
+					data-options="required:true" label="费率:" style="width: 100%"></input>
+			</div>
+			<div style="margin-bottom: 10px">
+				<input id="alipayAccount" name="alipayAccount"
+					class="easyui-textbox" data-options="required:true" label="支付宝:"
+					style="width: 100%"></input>
+			</div>
+
+			<div style="margin-bottom: 20px">
+				<a id="submit" class="easyui-linkbutton" style="width: 100%"
+					onclick="$('#ff').submit()">提交</a>
+			</div>
+		</form>
+	</div>
 </body>
 </html>

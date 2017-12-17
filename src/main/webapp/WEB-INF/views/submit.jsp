@@ -11,19 +11,12 @@
     <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript">
 		$(document).ready(function(){
-			$("#date").datebox('setValue', parsedate());
-			var orderDetail = '${billDetail}';
+			
+			var orderDetail = jQuery.parseJSON('${billDetail}');
+			$("#date").datebox('setValue', orderDetail.date);
 			$("#nickName").textbox('setValue', orderDetail.nickName);
 		});
 		
-		function parsedate(){  
-		    var date = new Date();  
-		    var year = date.getFullYear();  
-		    var month = date.getMonth()+1; //start from 0     
-		    var day = date.getDate();   
-		    return (month<10 ? '0' : '') + month + '/' +
-		    (day<10 ? '0' : '') + day+"/"+year;
-		}  
 </script>
 </head>
 
