@@ -28,6 +28,18 @@
 		$("#rate").textbox('setValue', orderDetail.rate);
 		$("#alipayAccount").textbox('setValue', orderDetail.alipayAccount);
 	});
+	
+	$(function(){
+		$('#ff').form({
+			url:'/tess4j/saveForm/',
+			onSubmit:function(){
+				return $(this).form('validate');
+			},
+			success:function(data){
+				document.location.reload(true);
+			}
+		});
+	});
 </script>
 </head>
 <body>
@@ -36,7 +48,7 @@
 			<div class="m-toolbar">
 				<div class="m-title">报单数据确认</div>
 		</header>
-		<form id="ff" action="tess4j/saveForm/" method="post">
+		<form id="ff" method="post">
 			<div style="margin-bottom: 10px">
 				<input id="date" name="date" class="easyui-datebox" label="扫码日期:"
 					data-options="required:true" style="width: 100%"></input>

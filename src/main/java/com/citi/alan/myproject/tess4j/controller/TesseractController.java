@@ -61,21 +61,22 @@ public class TesseractController {
 		return mView;
 	}
 
-	@RequestMapping(value = "/test")
-	@ResponseBody
-	ModelAndView test() throws IOException, TesseractException {
+	
+	    @RequestMapping(value = "/saveForm", method = RequestMethod.POST)
+	    @ResponseBody
+	    ModelAndView saveForm(BillOrderDetail billOrderDetail) throws IOException, TesseractException {
 
-		BillOrderDetail billOrderDetail = new BillOrderDetail();
-		billOrderDetail.setRate("0.3");
-		billOrderDetail.setActivityType("高端群特供噜卡");
-		billOrderDetail.setName("Mr Tong");
-		billOrderDetail.setNickName("兔少");
-		
-		ModelAndView mView = new ModelAndView("submit");
-		ObjectMapper objectMapper = new ObjectMapper();
-		String json = objectMapper.writeValueAsString(billOrderDetail);
-		mView.addObject("billDetail", json);
-		return mView;
-	}
+
+	        billOrderDetail.setRate("0.3");
+	        billOrderDetail.setActivityType("高端群特供噜卡");
+	        billOrderDetail.setName("Mr Tong");
+	        billOrderDetail.setNickName("兔少");
+	        
+	        ModelAndView mView = new ModelAndView("submit");
+	        ObjectMapper objectMapper = new ObjectMapper();
+	        String json = objectMapper.writeValueAsString(billOrderDetail);
+	        mView.addObject("billDetail", json);
+	        return mView;
+	    }
 
 }
