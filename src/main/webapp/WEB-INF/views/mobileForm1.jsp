@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport"
 	content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>保单系统</title>
+<title>报单系统</title>
 <link rel="stylesheet" type="text/css"
 	href="/easyui/themes/metro/easyui.css">
 <link rel="stylesheet" type="text/css" href="/easyui/themes/mobile.css">

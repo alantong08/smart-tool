@@ -36,8 +36,8 @@ public class ImageUtil {
     public static void main(String[] args) throws IOException, TesseractException {
 
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        String path = "C://upload//alipay.png";
-        String result = "C://upload//result2.png";
+        String path = "C://upload//android_elian1.png";
+        String result = "C://upload//elian_result.png";
         // 读取原图像
         Mat image = Imgcodecs.imread(path, Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE);
         Mat dst = new Mat();
