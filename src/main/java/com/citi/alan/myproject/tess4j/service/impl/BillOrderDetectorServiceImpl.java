@@ -197,7 +197,7 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
         billOrderDetail.setMerchantName(merchantName);
         
         
-        String orderAmount = resultMap.get("订单金额").substring(1).replaceAll("o", "0");;
+        String orderAmount = resultMap.get("订单金额").substring(1).replaceAll("o", "0").replaceAll(" ", "");
         Float actualAmount = Float.valueOf( orderAmount);
         billOrderDetail.setActualPrice(actualAmount);   
         billOrderDetail.setTransferType(TransferType.WEIXINPAY.getValue());
