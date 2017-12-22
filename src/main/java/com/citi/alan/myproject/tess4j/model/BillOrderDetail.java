@@ -6,6 +6,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class BillOrderDetail implements Serializable{
 
+    private static final long serialVersionUID = 1L;
     private String date;
     private String name;
     private String nickName;
@@ -108,7 +109,4 @@ public class BillOrderDetail implements Serializable{
         return ToStringBuilder.reflectionToString(this);
       
     }
-    
-    
-    
 }

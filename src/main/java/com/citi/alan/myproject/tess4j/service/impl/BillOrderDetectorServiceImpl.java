@@ -93,7 +93,7 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
         
         String orderAmount = resultMap.get("订单金额").replaceAll("o", "0");
         Float actualAmount = Float.valueOf( orderAmount);
-        String discountedPrice = resultMap.get("随机立减").substring(1).replaceAll("o", "0");;
+        String discountedPrice = resultMap.get("随机立减").substring(1).replaceAll("o", "0").replaceAll("O", "0");;
         if(!StringUtils.isEmpty(discountedPrice)) {
         		Float disPrice = Float.valueOf(discountedPrice);
         		actualAmount = actualAmount-disPrice;
@@ -126,9 +126,14 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
             String value = singleLineResult.substring(singleLineResult.indexOf(key)+key.length());
             if(key.contains("实付金额")) {
                     key = "订单金额";
-            }else if(value.contains("时间")) {
+            }else if(value.contains("时间") || key.contains("交易时间")) {
                     key = "支付时间";
-                    value = value.substring(value.indexOf("时间")+2).trim();
+                    if(value.indexOf("时间")>0){
+                        value = value.substring(value.indexOf("时间")+2).trim();
+                    }else{
+                        value=value.trim();
+                    }
+                   
             }else if(key.contains("订单编号")) {
                     key = "商户订单号";
             }
@@ -144,7 +149,7 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
         String day = date.substring(8, 10);
         billOrderDetail.setDate(month+"/"+day+"/"+year);
         
-        String orderNum = resultMap.get("商户订单号").replaceAll("o", "0");
+        String orderNum = resultMap.get("商户订单号").replaceAll("o", "0").replaceAll("O", "0");
         billOrderDetail.setOrderNum(orderNum);
         String merchantsNo = orderNum.substring(0, 12);
         String merchantName = MerchantsDict.merchants.get(merchantsNo);
@@ -190,7 +195,7 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
         String day = date.substring(8, 10);
         billOrderDetail.setDate(month+"/"+day+"/"+year);
         
-        String orderNum = resultMap.get("商户订单号").replaceAll("o", "0");
+        String orderNum = resultMap.get("商户订单号").replaceAll("o", "0").replaceAll("O", "0");;
         billOrderDetail.setOrderNum(orderNum);
         String merchantsNo = orderNum.substring(0, 12);
         String merchantName = MerchantsDict.merchants.get(merchantsNo);

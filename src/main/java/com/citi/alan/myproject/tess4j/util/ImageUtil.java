@@ -22,6 +22,7 @@ public class ImageUtil {
     private String uploadFilePath;
     
     public String  processImageThreshold(String absoluteFilePath){
+        long lStartTime = System.currentTimeMillis();
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         Mat image = Imgcodecs.imread(absoluteFilePath, Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE);
         Mat dst = new Mat();
@@ -30,6 +31,9 @@ public class ImageUtil {
         String newFileName = "grayscall_"+absoluteFilePath.substring(absoluteFilePath.lastIndexOf(File.separator)+1);
         String newFile = uploadFilePath+newFileName;
         Imgcodecs.imwrite(newFile , dst);
+        long lEndTime = System.currentTimeMillis();
+        long output = (lEndTime - lStartTime);
+        System.out.println("processImageThreshold : Elapsed time in millseconds: " + output);
         return newFile;
     }
 

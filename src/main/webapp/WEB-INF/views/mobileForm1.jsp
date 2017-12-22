@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,8 +6,7 @@
 <meta name="viewport"
 	content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>报单系统</title>
-<link rel="stylesheet" type="text/css"
-	href="/easyui/themes/metro/easyui.css">
+<link rel="stylesheet" type="text/css" href="/easyui/themes/metro/easyui.css">
 <link rel="stylesheet" type="text/css" href="/easyui/themes/mobile.css">
 <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
 <script type="text/javascript" src="/easyui/jquery.min.js"></script>

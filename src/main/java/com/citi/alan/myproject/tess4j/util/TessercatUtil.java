@@ -16,12 +16,16 @@ public class TessercatUtil {
     private String datapath;
 
     public String parseImage(File imageFile) throws IOException, TesseractException {
+        long lStartTime = System.currentTimeMillis();
         Tesseract1 instance = new Tesseract1();
         instance.setLanguage("chi_sim+eng");
         instance.setDatapath(datapath);
         System.out.println("--------------------bill detail-------------");
         String result = instance.doOCR(imageFile);
         System.out.println(result);
+        long lEndTime = System.currentTimeMillis();
+        long output = (lEndTime - lStartTime)/1000;
+        System.out.println("parseImage Elapsed time in seconds: " + output);
         return result;
     }
 }
