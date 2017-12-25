@@ -8,49 +8,41 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.citi.alan.myproject.tess4j.entity.UserInfo;
 import com.citi.alan.myproject.tess4j.model.UserLoginDetail;
 import com.citi.alan.myproject.tess4j.service.api.UserInfoService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
+@RequestMapping("/loginRegister")
 @RestController
-@RequestMapping("/user")
 public class UserLoginController {
 
     @Autowired
     private UserInfoService userInfoService;
 
-    @RequestMapping(value = "/loginPage", method = RequestMethod.POST)
-    public ModelAndView login(@RequestParam("mobile") String mobile,@RequestParam("password") String password ) {
-        ModelAndView mView = new ModelAndView("login");
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public UserLoginDetail login(@RequestParam("mobile") String mobile,@RequestParam("password") String password ) {
         String viewName = "";
+        UserLoginDetail userLoginDetail = null;
         try {
-           
-            UserLoginDetail userLoginDetail = userInfoService.login(mobile, password);
+            userLoginDetail = userInfoService.login(mobile, password);
             if (userLoginDetail.getMobile() != null) {
-                viewName = "/mobileForm1";
+                viewName = "/user/uploadOrderChart";
             }else{
-                userLoginDetail.setRegistered(false);
-                userLoginDetail.setMobile(mobile);
-                userLoginDetail.setPassword(password);
+            		userLoginDetail.setMessage("failed");
                 viewName = "/login";
             }
            
-            ObjectMapper objectMapper = new ObjectMapper();
-            String json = objectMapper.writeValueAsString(userLoginDetail);
-            mView.addObject("userLogin", json);
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            String json = objectMapper.writeValueAsString(userLoginDetail);
+            userLoginDetail.setView(viewName);
         } catch (Exception e) {
             e.printStackTrace();
         }
-       
-        mView.setViewName(viewName);
-        return mView;
+        return userLoginDetail;
     }
 
     
-    @RequestMapping(value = "/registerPage", method = RequestMethod.POST)
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
     public UserLoginDetail registerPage(@RequestParam Map<String, String> data) {
         
         String viweName = null;
@@ -62,7 +54,7 @@ public class UserLoginController {
             if (userLoginDetail.isRegistered()) {
                 viweName = "/register";
             }else{
-                viweName = "/mobileForm1";
+                viweName = "/user/uploadOrderChart";
             }
             userLoginDetail.setView(viweName);
 

@@ -1,10 +1,15 @@
 package com.citi.alan.myproject.tess4j.service.impl;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.citi.alan.myproject.tess4j.dao.RoleDao;
 import com.citi.alan.myproject.tess4j.dao.UserInfoDao;
+import com.citi.alan.myproject.tess4j.entity.Role;
 import com.citi.alan.myproject.tess4j.entity.UserInfo;
 import com.citi.alan.myproject.tess4j.model.UserLoginDetail;
 import com.citi.alan.myproject.tess4j.service.api.UserInfoService;
@@ -14,6 +19,8 @@ public class UserInfoServiceImpl implements UserInfoService{
 
     @Autowired
     private UserInfoDao userInfoDao;
+    @Autowired
+    private RoleDao roleDao;
     @Override
     public boolean creatUserAccount(UserLoginDetail userLoginDetail) {
         // TODO Auto-generated method stub
@@ -36,6 +43,10 @@ public class UserInfoServiceImpl implements UserInfoService{
         if(userInfo!=null){
             userLoginDetail.setRegistered(true);
         }else{
+        		Role role = roleDao.findByRoleName("USER");
+        		HashSet<Role> roleSet = new HashSet<Role>();
+        		roleSet.add(role);
+        		data.setRoles(roleSet);
             userInfoDao.save(data);
         }
         return userLoginDetail;

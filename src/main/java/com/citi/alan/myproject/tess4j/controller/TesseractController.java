@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sourceforge.tess4j.TesseractException;
 
 @RestController
-@RequestMapping("/tess4j")
+@RequestMapping("/user/tess4j")
 public class TesseractController {
 
 	@Value("${upload.file.path}")

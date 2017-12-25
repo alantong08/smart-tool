@@ -20,7 +20,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @Table(name = "user_info")
 public class UserInfo {
 
-    
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
     private Integer userId;
     @Column(name = "user_name")
@@ -33,15 +34,16 @@ public class UserInfo {
     private String password;
     @Column(name = "mobile")
     private String mobile;
-    
+    @Column(name = "enabled")
+    private Integer enabled=1;
+    @OneToMany(mappedBy = "userInfo", cascade = CascadeType.ALL)
     private Set<OrderDetail> orderDetails;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
     public Integer getUserId() {
         return userId;
     }
@@ -98,10 +100,15 @@ public class UserInfo {
         this.mobile = mobile;
     }
 
-    
+    public Integer getEnabled() {
+		return enabled;
+	}
 
-    @OneToMany(mappedBy = "userInfo", cascade = CascadeType.ALL)
-    public Set<OrderDetail> getOrderDetails() {
+	public void setEnabled(Integer enabled) {
+		this.enabled = enabled;
+	}
+
+	public Set<OrderDetail> getOrderDetails() {
         return orderDetails;
     }
 

@@ -16,7 +16,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @Table(name = "order_detail")
 public class OrderDetail {
 
-    
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private Date scanDate;
     private String orderNum;
@@ -26,10 +27,11 @@ public class OrderDetail {
     private String activityType;
     private String rate;
     private String comment;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private UserInfo userInfo;
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
     public Integer getId() {
         return id;
     }
@@ -86,8 +88,7 @@ public class OrderDetail {
         this.comment = comment;
     }
     
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+
     public UserInfo getUserInfo() {
         return userInfo;
     }

@@ -22,8 +22,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-    @Autowired
     private DataSource dataSource;
     
     
@@ -35,36 +33,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.
-        jdbcAuthentication()
-            .usersByUsernameQuery(usersQuery)
-            .authoritiesByUsernameQuery(rolesQuery)
-            .dataSource(dataSource)
-            .passwordEncoder(bCryptPasswordEncoder);
+        auth.jdbcAuthentication().dataSource(dataSource)
+        .usersByUsernameQuery(usersQuery).authoritiesByUsernameQuery(rolesQuery);
     }
     
     @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+    protected void configure(HttpSecurity http) throws Exception {
+        http.
+            authorizeRequests()
+            .antMatchers("/").permitAll()
+            .antMatchers("/login").permitAll()
+            .antMatchers("/register").permitAll()
+            .antMatchers("/loginRegister/**").permitAll()
+            .antMatchers("/user/**").hasAnyAuthority("USER","ADMIN").anyRequest().authenticated()
+            .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest().authenticated()
+            .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
+            .and().exceptionHandling().accessDeniedPage("/403").and().csrf().disable();
     }
-
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        
-        http.csrf().disable().
-            authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/register").permitAll()
-                .antMatchers("/user/loginPage").permitAll()
-                .antMatchers("/user/registerPage").permitAll()
-                .antMatchers("/tess4j/**").hasAnyAuthority("USER","ADMIN").anyRequest().authenticated()
-                .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest().authenticated()
-                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
-                .and().exceptionHandling().accessDeniedPage("/403");
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/resources/**", "/static/**","/easyui/**");
     }
-
-
 }
 

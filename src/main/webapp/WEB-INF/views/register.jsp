@@ -17,7 +17,7 @@
 	$(function() {
 		$('#registerForm').submit(function(){
 		    $.ajax({
-		      url: '/user/registerPage',
+		      url: '/loginRegister/register',
 		      type: 'POST',
 		      data : $('#registerForm').serialize(),
 		      success: function(response){
@@ -60,7 +60,7 @@
 						style="width: 100%; height: 38px">
 				</div>
 				<div style="margin-bottom: 10px">
-					<input id="name" name="name" class="easyui-textbox"
+					<input id="userName" name="userName" class="easyui-textbox"
 						data-options="required:true" label="姓名:"
 						style="width: 100%; height: 38px"></input>
 				</div>

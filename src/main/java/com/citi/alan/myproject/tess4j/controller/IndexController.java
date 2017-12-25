@@ -18,11 +18,16 @@ public class IndexController {
     
     @RequestMapping(value={"upload"})
     public String uplaod(){
-        return "mobileForm1";
+        return "/user/uploadOrderChart";
     }
     
     @RequestMapping(value={"registerSuccess"})
     public String registerSuccess(){
-        return "registerSuccess";
+        return "/user/registerSuccess";
+    }
+    
+    @RequestMapping(value={"/user/uploadOrderChart"})
+    public String uploadOrderChart(){
+        return "/user/uploadOrderChart";
     }
 }

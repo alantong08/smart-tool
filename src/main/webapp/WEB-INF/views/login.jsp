@@ -14,17 +14,23 @@
 <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="/easyui/jquery.easyui.mobile.js"></script>
 <script type="text/javascript">
-	$(document).ready(function() {
 
-		var userLogin = $.parseJSON('${userLogin}');
-		if (!$.isEmptyObject(userLogin)) {
-			if (userLogin.registered == false) {
-				$("#mobile").numberbox('setValue', userLogin.mobile);
-				$("#password").passwordbox('setValue', userLogin.password);
-				alert("用户名密码错误,请确认");
-			}
-		}
-
+	$(function() {
+		$('#loginForm').submit(function(){
+		    $.ajax({
+		      url: '/loginRegister/login',
+		      type: 'POST',
+		      data : $('#loginForm').serialize(),
+		      success: function(response){
+		    	 if(response.message == 'failed'){
+		    		 alert("用户名密码错误,请确认");
+		    	 }else{
+		    		 window.location.href = response.view;
+		    	 }
+		    	}
+		    });
+		    return false; 
+		});
 	});
 </script>
 </head>
@@ -42,7 +48,7 @@
 				style="margin: 0; width: 100%; height: 100%;">
 		</div>
 
-		<form id="loginForm" method="post" action="/user/loginPage">
+		<form id="loginForm">
 			<div style="padding: 0 20px">
 				<div style="margin-bottom: 10px">
 					<input id="mobile" name="mobile" class="easyui-numberbox"
