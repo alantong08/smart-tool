@@ -18,26 +18,26 @@ public class DBInitializeConfig {
 	
 	@PostConstruct
 	public void initialize(){
-//		try {
-//			Connection connection = dataSource.getConnection();
-//			Statement statement = connection.createStatement();
-//			createUserInfo(statement);
-//			createOrderDetail(statement);
-//			statement.close();
-//			connection.close();
-//		}
-//		catch (SQLException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			Connection connection = dataSource.getConnection();
+			Statement statement = connection.createStatement();
+			createUserInfo(statement);
+			createOrderDetail(statement);
+			statement.close();
+			connection.close();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
     private void createUserInfo(Statement statement) throws SQLException {
-        statement.execute("DROP TABLE IF EXISTS UserInfo");
+        statement.execute("DROP TABLE IF EXISTS user_info");
         statement.executeUpdate(
-        		"CREATE TABLE UserInfo(" +
-        		"id INTEGER Primary key, " +
-        		"userName varchar(30) not null," +
-        		"nickName varchar(30) not null," +
+        		"CREATE TABLE user_info(" +
+        		"user_id INTEGER Primary key, " +
+        		"user_name varchar(30) not null," +
+        		"nick_name varchar(30) not null," +
         		"password varchar(30) not null," +
         		"alipayAccount varchar(100) not null," + 
         		"mobile varchar(30) not null)" 
@@ -45,9 +45,9 @@ public class DBInitializeConfig {
     }
     
     private void createOrderDetail(Statement statement) throws SQLException {
-        statement.execute("DROP TABLE IF EXISTS OrderDetail");
+        statement.execute("DROP TABLE IF EXISTS order_detail");
         statement.executeUpdate(
-                "CREATE TABLE OrderDetail(" +
+                "CREATE TABLE order_detail(" +
                 "id INTEGER Primary key, " +
                 "userName varchar(30) not null," +
                 "nickName varchar(30) not null," +

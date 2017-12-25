@@ -11,6 +11,7 @@ public interface UserInfoDao extends CrudRepository<UserInfo, Long>{
     public UserInfo findByMobileAndPassword(String mobile, String password);
     
     public UserInfo findByMobile(String mobile);
+    
    
 
 }

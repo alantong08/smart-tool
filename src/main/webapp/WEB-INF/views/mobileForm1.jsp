@@ -19,7 +19,7 @@
 			<div class="m-toolbar">
 				<div class="m-title">报单系统</div>
 		</header>
-		<form id="ff" action="tess4j/submit/" method="post"
+		<form id="ff" action="/tess4j/submit/" method="post"
 			enctype="multipart/form-data">
 			<div style="margin-bottom: 10px">
 				<select id="activityType" name="activityType"

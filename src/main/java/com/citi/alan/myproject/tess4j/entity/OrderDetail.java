@@ -6,19 +6,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Entity
-@Table(name = "OrderDetail")
+@Table(name = "order_detail")
 public class OrderDetail {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    
     private Integer id;
-    private String userName;
-    private String nickName;
     private Date scanDate;
     private String orderNum;
     private String merchantName;
@@ -26,26 +25,18 @@ public class OrderDetail {
     private String transferType;
     private String activityType;
     private String rate;
-    private String alipayAccount;
     private String comment;
+    private UserInfo userInfo;
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Integer getId() {
         return id;
     }
     public void setId(Integer id) {
         this.id = id;
     }
-    public String getUserName() {
-        return userName;
-    }
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-    public String getNickName() {
-        return nickName;
-    }
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
+
     public Date getScanDate() {
         return scanDate;
     }
@@ -88,12 +79,6 @@ public class OrderDetail {
     public void setRate(String rate) {
         this.rate = rate;
     }
-    public String getAlipayAccount() {
-        return alipayAccount;
-    }
-    public void setAlipayAccount(String alipayAccount) {
-        this.alipayAccount = alipayAccount;
-    }
     public String getComment() {
         return comment;
     }
@@ -101,6 +86,14 @@ public class OrderDetail {
         this.comment = comment;
     }
     
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
+    }
     @Override
     public String toString(){
         return ToStringBuilder.reflectionToString(this);
