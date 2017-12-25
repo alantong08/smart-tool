@@ -15,6 +15,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.citi.alan.myproject.tess4j.security.MyUserDetailsService;
+
 
 @Configuration
 @EnableWebSecurity
@@ -23,6 +25,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private DataSource dataSource;
+    
+    @Autowired
+    private MyUserDetailsService myUserDetailsService;
     
     
     @Value("${spring.queries.users-query}")
@@ -33,8 +38,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().dataSource(dataSource)
-        .usersByUsernameQuery(usersQuery).authoritiesByUsernameQuery(rolesQuery);
+//        auth.jdbcAuthentication().dataSource(dataSource)
+//        .usersByUsernameQuery(usersQuery).authoritiesByUsernameQuery(rolesQuery);        
+        auth.userDetailsService(myUserDetailsService);
     }
     
     @Override
