@@ -27,11 +27,12 @@
 		$("#activityType").combobox('setValue', orderDetail.activityType);
 		$("#rate").textbox('setValue', orderDetail.rate);
 		$("#alipayAccount").textbox('setValue', orderDetail.alipayAccount);
+		$("#comments").textbox('setValue', orderDetail.comments);
 	});
 	
 	$(function(){
 		$('#ff').form({
-			url:'/tess4j/saveForm/',
+			url:'/user/tess4j/saveBillOrder/',
 			onSubmit:function(){
 				return $(this).form('validate');
 			},
@@ -62,12 +63,12 @@
 					data-options="required:true" label="群昵称:" style="width: 100%"></input>
 			</div>
 			<div style="margin-bottom: 10px">
-				<input id="orderNum" name="" orderNum"" class="easyui-textbox"
+				<input id="orderNum" name="orderNum" class="easyui-textbox"
 					data-options="required:true" label="订单号:" style="width: 100%"></input>
 			</div>
 			<div style="margin-bottom: 10px">
-				<input id="merchantName" name="merchantName" class="easyui-textbox"
-					data-options="required:true" label="商户名" style="width: 100%"></input>
+				<input id="merchantName" name="merchantName" class="easyui-combobox"
+					 data-options="valueField:'merchantId',textField:'merchantName',url:'/user/tess4j/merchant'" data-options="required:true" label="商户名" style="width: 100%"></input>
 			</div>
 			<div style="margin-bottom: 10px">
 				<input id="actualPrice" name="actualPrice" class="easyui-textbox"
@@ -100,6 +101,11 @@
 			<div style="margin-bottom: 10px">
 				<input id="alipayAccount" name="alipayAccount"
 					class="easyui-textbox" data-options="required:true" label="支付宝:"
+					style="width: 100%"></input>
+			</div>
+			<div style="margin-bottom: 10px">
+				<input id="comments" name="comments"
+					class="easyui-textbox" data-options="required:false" label="备注:"
 					style="width: 100%"></input>
 			</div>
 

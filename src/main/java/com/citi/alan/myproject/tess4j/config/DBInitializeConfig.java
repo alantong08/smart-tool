@@ -43,7 +43,7 @@ public class DBInitializeConfig {
         statement.executeUpdate("insert into merchant values ('160557220163','得利家用A')");
         statement.executeUpdate("insert into merchant values ('160504990139','尚卫三A')");
         statement.executeUpdate("insert into merchant values ('160559400019','通盛摩托老')");
-        statement.executeUpdate("insert into merchant values ('160506010109','飞亚餐馆')");
+        statement.executeUpdate("insert into merchant values ('160506010109','飞亚餐馆')"); 
         statement.executeUpdate("insert into merchant values ('160507010084','宾客来旅馆')");
         statement.executeUpdate("insert into merchant values ('160550940049','如意金店')");
         statement.executeUpdate("insert into merchant values ('160509010007','国际娱乐会所')");

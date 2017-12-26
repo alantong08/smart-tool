@@ -20,7 +20,7 @@ public class MerchantsDict {
 		merchants.put("160570320002","通盛摩托新");
 		merchants.put("160504070052","东升百货老");
 		merchants.put("160559620007","旅行社");
-		merchants.put("160509010006","金色年代");
+		merchants.put("160509010006","金色年代"); 
 		merchants.put("160558010005","太平洋电影");
 
 	}
