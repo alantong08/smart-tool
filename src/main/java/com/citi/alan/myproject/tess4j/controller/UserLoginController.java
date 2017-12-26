@@ -2,6 +2,8 @@ package com.citi.alan.myproject.tess4j.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,20 +22,20 @@ public class UserLoginController {
     private UserInfoService userInfoService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public UserLoginDetail login(@RequestParam("mobile") String mobile,@RequestParam("password") String password ) {
+    public UserLoginDetail login(@RequestParam("mobile") String mobile,@RequestParam("password") String password, HttpServletRequest request ) {
+        
+        request.getSession().setAttribute("mobile", mobile);
         String viewName = "";
-        UserLoginDetail userLoginDetail = null;
+        UserLoginDetail userLoginDetail = null;  
         try {
             userLoginDetail = userInfoService.login(mobile, password);
-            if (userLoginDetail.getMobile() != null) {
+            if (userLoginDetail.getMobile() != null) {               
                 viewName = "/user/uploadOrderChart";
             }else{
-            		userLoginDetail.setMessage("failed");
+            	userLoginDetail.setMessage("failed");
                 viewName = "/login";
             }
            
-//            ObjectMapper objectMapper = new ObjectMapper();
-//            String json = objectMapper.writeValueAsString(userLoginDetail);
             userLoginDetail.setView(viewName);
         } catch (Exception e) {
             e.printStackTrace();
@@ -43,8 +45,8 @@ public class UserLoginController {
 
     
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public UserLoginDetail registerPage(@RequestParam Map<String, String> data) {
-        
+    public UserLoginDetail registerPage(@RequestParam Map<String, String> data, HttpServletRequest request) {
+       
         String viweName = null;
         UserLoginDetail userLoginDetail = null;
         try {
@@ -54,6 +56,7 @@ public class UserLoginController {
             if (userLoginDetail.isRegistered()) {
                 viweName = "/register";
             }else{
+                request.getSession().setAttribute("mobile", userInfo.getMobile());
                 viweName = "/user/uploadOrderChart";
             }
             userLoginDetail.setView(viweName);

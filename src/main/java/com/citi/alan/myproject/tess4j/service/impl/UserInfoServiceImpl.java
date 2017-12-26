@@ -6,6 +6,7 @@ import java.util.Set;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor;
 
 import com.citi.alan.myproject.tess4j.dao.RoleDao;
 import com.citi.alan.myproject.tess4j.dao.UserInfoDao;
@@ -21,11 +22,12 @@ public class UserInfoServiceImpl implements UserInfoService{
     private UserInfoDao userInfoDao;
     @Autowired
     private RoleDao roleDao;
+
+    
     @Override
-    public boolean creatUserAccount(UserLoginDetail userLoginDetail) {
-        // TODO Auto-generated method stub
-        return false;
-    }
+   public UserInfo getUserByMobile(String mobile){
+       return  userInfoDao.findByMobile(mobile);
+   }
 
     @Override
     public UserLoginDetail login(String mobile, String password) {

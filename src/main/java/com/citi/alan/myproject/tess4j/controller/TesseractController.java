@@ -15,8 +15,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.citi.alan.myproject.tess4j.entity.UserInfo;
 import com.citi.alan.myproject.tess4j.model.BillOrderDetail;
 import com.citi.alan.myproject.tess4j.service.api.BillOrderDetectorService;
+import com.citi.alan.myproject.tess4j.service.api.UserInfoService;
 import com.citi.alan.myproject.tess4j.util.DateUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,6 +36,9 @@ public class TesseractController {
 
 	@Autowired
 	private BillOrderDetectorService billOrderDetectorService;
+	
+	@Autowired
+	private UserInfoService userInfoService;
 
 	@RequestMapping(value = "/submit", method = RequestMethod.POST)
 	@ResponseBody
@@ -42,19 +47,21 @@ public class TesseractController {
 		try {
 			String activityType = request.getParameter("activityType");
 			MultipartFile file = ((MultipartHttpServletRequest) request).getFile("file-order");
+			String mobile = (String)request.getSession().getAttribute("mobile");
+			UserInfo user = userInfoService.getUserByMobile(mobile);
 			String originalFileName = file.getOriginalFilename();
 			if (file != null && originalFileName != null && originalFileName.length() > 0) {
 				String newFileName = DateUtil.getFormatDateStr(DATE_PATTERN)
 						+ originalFileName.substring(originalFileName.lastIndexOf("."));
 				File newFile = new File(uploadFilePath + newFileName);
 				file.transferTo(newFile);
-				detail = billOrderDetectorService.detetctBillOrderDetail(newFile, activityType);
+				detail = billOrderDetectorService.detetctBillOrderDetail(newFile, activityType, user);
 			}
 		} catch (Exception se) {
 			se.printStackTrace();
 		}
 
-		ModelAndView mView = new ModelAndView("confirm");
+		ModelAndView mView = new ModelAndView("/user/confirm");
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json = objectMapper.writeValueAsString(detail);
 		mView.addObject("billDetail", json);
