@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +17,6 @@ public class MerchantServiceImpl implements MerchantService {
 	@Autowired
 	private MerchantDao merchantDao;
 
-	@PostConstruct
 	public Map<String, Merchant> getMerchantMap() {
 		Iterable<Merchant> iterable = merchantDao.findAll();
 		Iterator<Merchant> iterator = iterable.iterator();

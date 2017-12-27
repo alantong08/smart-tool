@@ -1,5 +1,6 @@
 package com.citi.alan.myproject.tess4j.dao;
 
+import org.apache.catalina.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +12,7 @@ public interface UserInfoDao extends CrudRepository<UserInfo, Long>{
     public UserInfo findByMobileAndPassword(String mobile, String password);
     
     public UserInfo findByMobile(String mobile);
+    
     
    
 

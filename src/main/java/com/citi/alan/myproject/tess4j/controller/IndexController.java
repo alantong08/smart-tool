@@ -30,4 +30,9 @@ public class IndexController {
     public String uploadOrderChart(){
         return "/user/uploadOrderChart";
     }
+    
+    @RequestMapping(value={"/user/reportResult"})
+    public String reportResult(){
+        return "/user/reportResult";
+    }
 }

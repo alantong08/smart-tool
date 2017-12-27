@@ -11,5 +11,6 @@ public interface OrderDetailDao extends CrudRepository<OrderDetail, Long>{
     
     public OrderDetail findByUserInfo(UserInfo userInfo);
    
+   
 
 }

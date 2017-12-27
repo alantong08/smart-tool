@@ -30,15 +30,21 @@
 		$("#comments").textbox('setValue', orderDetail.comments);
 	});
 	
-	$(function(){
-		$('#ff').form({
-			url:'/user/tess4j/saveBillOrder/',
-			onSubmit:function(){
-				return $(this).form('validate');
-			},
-			success:function(data){
-				document.location.reload(true);
-			}
+	$(function() {
+		$('#ff').submit(function(){
+		    $.ajax({
+		      url: '/user/tess4j/saveBillOrder/',
+		      type: 'POST',
+		      data : $('#ff').serialize(),
+		      success: function(response){
+		    	  if(response.status == true){
+		    		  window.location.href = response.view;
+		    	 }else{
+		    		 alert("出现异常，请联系管理员");
+		    	 }
+		    	}
+		    });
+		    return false;
 		});
 	});
 </script>

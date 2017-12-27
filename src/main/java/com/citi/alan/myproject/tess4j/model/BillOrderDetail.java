@@ -20,6 +20,8 @@ public class BillOrderDetail implements Serializable{
     private String transferType;
     private String comments;
     private String alipayAccount;
+    private String mobile;
+    
     public String getDate() {
         return date;
     }
@@ -104,7 +106,14 @@ public class BillOrderDetail implements Serializable{
 	public void setAlipayAccount(String alipayAccount) {
 		this.alipayAccount = alipayAccount;
 	}
-	@Override
+	
+	public String getMobile() {
+        return mobile;
+    }
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+    @Override
     public String toString(){
         return ToStringBuilder.reflectionToString(this);
       

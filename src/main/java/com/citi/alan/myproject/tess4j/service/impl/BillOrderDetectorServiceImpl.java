@@ -2,19 +2,22 @@ package com.citi.alan.myproject.tess4j.service.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.expression.ExpressionException;
 import org.springframework.stereotype.Service;
 
-import com.citi.alan.myproject.tess4j.dict.MerchantsDict;
+import com.citi.alan.myproject.tess4j.dao.OrderDetailDao;
+import com.citi.alan.myproject.tess4j.dao.UserInfoDao;
 import com.citi.alan.myproject.tess4j.entity.Merchant;
+import com.citi.alan.myproject.tess4j.entity.OrderDetail;
 import com.citi.alan.myproject.tess4j.entity.UserInfo;
 import com.citi.alan.myproject.tess4j.enu.ActivityType;
 import com.citi.alan.myproject.tess4j.enu.TransferType;
@@ -37,6 +40,12 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 	
 	@Autowired
 	private MerchantService merchantService;
+	
+	@Autowired
+	private OrderDetailDao orderDetailDao;
+	
+	@Autowired
+	private UserInfoDao userInfoDao;
 
 	@Value("${alipay.identifier}")
 	private String alipayIdentifier;
@@ -50,6 +59,23 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 	@PostConstruct
 	public void loadMerchantMap() {
 		map = merchantService.getMerchantMap();
+	}
+	
+	public boolean saveOrderDetail(BillOrderDetail billOrderDetail){
+	    OrderDetail orderDetail = new OrderDetail();
+	    boolean flag = false;
+	    try {
+            BeanUtils.copyProperties(orderDetail, billOrderDetail);
+            UserInfo userInfo = userInfoDao.findByMobile(billOrderDetail.getMobile());
+            orderDetail.setUserInfo(userInfo);
+            orderDetailDao.save(orderDetail);
+            flag = true;
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+	    return flag;
 	}
 
 	@Override

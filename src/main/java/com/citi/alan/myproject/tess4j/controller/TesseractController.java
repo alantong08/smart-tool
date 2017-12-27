@@ -1,9 +1,7 @@
 package com.citi.alan.myproject.tess4j.controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,14 +20,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.citi.alan.myproject.tess4j.entity.Merchant;
 import com.citi.alan.myproject.tess4j.entity.UserInfo;
 import com.citi.alan.myproject.tess4j.model.BillOrderDetail;
+import com.citi.alan.myproject.tess4j.model.ResponseResult;
 import com.citi.alan.myproject.tess4j.service.api.BillOrderDetectorService;
 import com.citi.alan.myproject.tess4j.service.api.MerchantService;
 import com.citi.alan.myproject.tess4j.service.api.UserInfoService;
 import com.citi.alan.myproject.tess4j.util.DateUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import net.sourceforge.tess4j.TesseractException;
 
 @RestController
 @RequestMapping("/user/tess4j")
@@ -48,6 +45,7 @@ public class TesseractController {
 	
 	@Autowired
 	private MerchantService merchantService;
+	
 
 	@RequestMapping(value = "/submit", method = RequestMethod.POST)
 	@ResponseBody
@@ -79,7 +77,7 @@ public class TesseractController {
 
 	@RequestMapping(value = "/merchant")
 	@ResponseBody
-	List<Merchant> getMerchantList() throws IOException, TesseractException {
+	List<Merchant> getMerchantList(){
 		Map<String, Merchant>  map = merchantService.getMerchantMap();
 		List<Merchant> merchants = new ArrayList<>();
 		for (Map.Entry<String, Merchant> entry : map.entrySet()) {
@@ -90,12 +88,15 @@ public class TesseractController {
 	
 	@RequestMapping(value = "/saveBillOrder", method = RequestMethod.POST)
 	@ResponseBody
-	ModelAndView saveForm(BillOrderDetail billOrderDetail, HttpServletRequest request) throws IOException, TesseractException {
-		ModelAndView mView = new ModelAndView("submit");
-		ObjectMapper objectMapper = new ObjectMapper();
-		String json = objectMapper.writeValueAsString(billOrderDetail);
-		mView.addObject("billDetail", json);
-		return mView;
+	ResponseResult saveForm(BillOrderDetail billOrderDetail, HttpServletRequest request)  {
+	    String mobile = (String) request.getSession().getAttribute("mobile");
+	    billOrderDetail.setMobile(mobile);
+	    boolean flag = billOrderDetectorService.saveOrderDetail(billOrderDetail);
+	    ResponseResult responseResult  = new ResponseResult();
+	    responseResult.setStatus(flag);
+	    responseResult.setView("/user/reportResult");
+	    return responseResult;
+	    
 	}
 
 }
