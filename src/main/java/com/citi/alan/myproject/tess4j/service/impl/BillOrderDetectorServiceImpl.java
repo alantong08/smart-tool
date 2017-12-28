@@ -138,7 +138,7 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 
 		} else if (ActivityType.NO_ASSISTS.getValue().equals(activityType)) {// don't join assists
 			rate = "0.4";
-		} else if (ActivityType.LUCKY_GUY.getValue().equals(activityType)) {// lucky guy
+		} else if (ActivityType.LUCKY_GUY.getValue().equals(activityType) || ActivityType.JIAOTONG.getValue().equals(activityType)) {// lucky guy or JiaoTong
 			rate = "0.1";
 		} else if (ActivityType.SUPER_ASSISTS.getValue().equals(activityType)) {// super assists
 			if (TransferType.ALIPAY.getValue() == transferType) {
@@ -148,8 +148,6 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 			} else if (TransferType.ELIANPAY.getValue() == transferType) {
 				rate = "0.2";
 			}
-		} else if (ActivityType.JIAOTONG.getValue().equals(activityType)) {
-			rate = "0.1";
 		}
 		billOrderDetail.setRate(rate);
 
@@ -177,10 +175,7 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 
 		try {
 			String date = resultMap.get("创建时间");
-			String year = date.substring(0, 4);
-			String month = date.substring(5, 7);
-			String day = date.substring(8, 10);
-			billOrderDetail.setDate(month + "/" + day + "/" + year);
+			setScanDate(billOrderDetail, date);
 		} catch (Exception se) {
 			se.printStackTrace();
 		}
@@ -191,8 +186,8 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 			billOrderDetail.setOrderNum(merchantsOrderNum);
 			String merchantsNo = merchantsOrderNum.substring(0, 12);
 			
-			Merchant merchant = map.get(merchantsNo);
-			billOrderDetail.setMerchantName(merchant.getMerchantName());
+			//Merchant merchant = map.get(merchantsNo);
+			billOrderDetail.setMerchantName(merchantsNo);
 		}catch(Exception se) {
 			se.printStackTrace();
 		}
@@ -217,6 +212,14 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 
 		return billOrderDetail;
 	}
+
+    private void setScanDate(BillOrderDetail billOrderDetail, String date) {
+        String year = date.substring(0, 4);
+        String month = date.substring(5, 7);
+        String day = date.substring(8, 10);
+       // billOrderDetail.setDate(month + "/" + day + "/" + year);
+        billOrderDetail.setDate(year+"-"+month+"-"+day);
+    }
 
 	/**
 	 * processs Elian Pay order
@@ -257,10 +260,7 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 
 		try {
 			String date = resultMap.get("支付时间");
-			String year = date.substring(0, 4);
-			String month = date.substring(5, 7);
-			String day = date.substring(8, 10);
-			billOrderDetail.setDate(month + "/" + day + "/" + year);
+			setScanDate(billOrderDetail, date);
 		} catch (Exception se) {
 			se.printStackTrace();
 		}
@@ -270,8 +270,9 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 			billOrderDetail.setOrderNum(orderNum);
 			String merchantsNo = orderNum.substring(0, 12);
 			
-			Merchant merchant = map.get(merchantsNo);
-			billOrderDetail.setMerchantName(merchant.getMerchantName());
+//			Merchant merchant = map.get(merchantsNo);
+//			billOrderDetail.setMerchantName(merchant.getMerchantName());		
+			billOrderDetail.setMerchantName(merchantsNo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -312,10 +313,7 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 
 		try {
 			String date = resultMap.get("支付时间");
-			String year = date.substring(0, 4);
-			String month = date.substring(5, 7);
-			String day = date.substring(8, 10);
-			billOrderDetail.setDate(month + "/" + day + "/" + year);
+			setScanDate(billOrderDetail, date);
 		} catch (Exception se) {
 			se.printStackTrace();
 		}
@@ -324,8 +322,9 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 			String orderNum = resultMap.get("商户订单号").replaceAll("o", "0").replaceAll("O", "0");
 			billOrderDetail.setOrderNum(orderNum);
 			String merchantsNo = orderNum.substring(0, 12);
-			Merchant merchant = map.get(merchantsNo);
-			billOrderDetail.setMerchantName(merchant.getMerchantName());
+//			Merchant merchant = map.get(merchantsNo);
+//			billOrderDetail.setMerchantName(merchant.getMerchantName());
+			billOrderDetail.setMerchantName(merchantsNo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

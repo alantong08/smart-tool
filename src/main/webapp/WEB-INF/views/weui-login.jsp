@@ -45,11 +45,11 @@
 
 		<div class="weui-btn-area">
 			<a class="weui-btn weui-btn_primary" id="showTooltips" >登录</a>
-			<a href="/weui-register" class="weui-btn weui-btn_default">注册</a>
+			<a href="/weuiRegister" class="weui-btn weui-btn_default">注册</a>
 		</div>
 	</form>
 	<div class="weui-footer weui-footer_fixed-bottom">
-  <p class="weui-footer__text">Copyright © 2008-2017 Alan, Tong</p>
+  <p class="weui-footer__text">Copyright © 2008-2018 兔少</p>
 </div>
 
 <script src="../lib/jquery-2.1.4.js"></script>
@@ -61,17 +61,6 @@
 </script>
 <script src="../js/jquery-weui.js"></script>
 <script>
-/*  	$("#showTooltips").click(function() {
-		var tel = $('#tel').val();
-		var code = $('#code').val();
-		if (!tel || !/1[3|4|5|7|8]\d{9}/.test(tel))
-			$.toptip('请输入手机号');
-		else if (!code || !/\d{6}/.test(code))
-			$.toptip('请输入六位手机验证码');
-		else
-			$.toptip('提交成功', 'success');
-	});  */
- 	
  	$("#showTooltips").click(function() {
 	    $.ajax({
 		      url: '/loginRegister/login',

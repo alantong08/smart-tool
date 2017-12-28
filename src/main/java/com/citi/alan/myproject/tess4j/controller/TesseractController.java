@@ -2,6 +2,7 @@ package com.citi.alan.myproject.tess4j.controller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.citi.alan.myproject.tess4j.entity.Merchant;
 import com.citi.alan.myproject.tess4j.entity.UserInfo;
@@ -68,10 +71,10 @@ public class TesseractController {
 			se.printStackTrace();
 		}
 
-		ModelAndView mView = new ModelAndView("/user/confirm");
+		ModelAndView mView = new ModelAndView("weui-confirm");
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json = objectMapper.writeValueAsString(detail);
-		mView.addObject("billDetail", json);
+		mView.addObject("billDetail",json);
 		return mView;
 	}
 
@@ -94,7 +97,7 @@ public class TesseractController {
 	    boolean flag = billOrderDetectorService.saveOrderDetail(billOrderDetail);
 	    ResponseResult responseResult  = new ResponseResult();
 	    responseResult.setStatus(flag);
-	    responseResult.setView("/user/reportResult");
+	    responseResult.setView("/weiuiMsg");
 	    return responseResult;
 	    
 	}

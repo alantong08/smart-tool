@@ -16,17 +16,12 @@ public class IndexController {
         return "register";
     }
     
-    @RequestMapping(value={"weui-register"})
-    public String weuiRegister(){
-        return "weui-register";
-    }
-    
-    
     
     @RequestMapping(value={"upload"})
     public String uplaod(){
         return "/user/uploadOrderChart";
     }
+
     
     @RequestMapping(value={"registerSuccess"})
     public String registerSuccess(){
@@ -55,6 +50,29 @@ public class IndexController {
     
     @RequestMapping(value={"weuiLogin"})
     public String weuiLogin(){ 
-        return "weui-login";
+        return "/weui-login";
     }
+    
+    @RequestMapping(value={"weuiRegister"})
+    public String weuiRegister(){
+        return "/weui-register";
+    }
+    
+    @RequestMapping(value={"weuiUploadChart"})
+    public String uploadChart(){
+        return "/weui-upload-chart";
+    }
+    
+    @RequestMapping(value={"weuiConfirm"})
+    public String weuiConfirm(){
+        return "/weui-confirm";
+    }
+    
+    @RequestMapping(value={"weiuiMsg"})
+    public String weiuiMsg(){
+        return "/weui-msg";
+    }
+    
+    
+    
 }

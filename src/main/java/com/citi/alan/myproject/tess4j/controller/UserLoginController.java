@@ -33,7 +33,7 @@ public class UserLoginController {
                 viewName = "/tabbar";
             }else{
             	userLoginDetail.setMessage("failed");
-                viewName = "/login";
+                viewName = "/weuiLogin";
             }
            
             userLoginDetail.setView(viewName);
@@ -57,7 +57,7 @@ public class UserLoginController {
                 viweName = "/register";
             }else{
                 request.getSession().setAttribute("mobile", userInfo.getMobile());
-                viweName = "/user/uploadOrderChart";
+                viweName = "/tabbar";
             }
             userLoginDetail.setView(viweName);
 

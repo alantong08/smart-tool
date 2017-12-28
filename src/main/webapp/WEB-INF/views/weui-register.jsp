@@ -27,7 +27,7 @@
 					<label class="weui-label">手机号</label>
 				</div>
 				<div class="weui-cell__bd">
-					<input class="weui-input" id="mobile" name="mobile" type="number" pattern="[0-9]*"
+					<input class="weui-input" id="mobile" name="mobile" type="number" pattern="[0-9]*" data-options="required:true"
 						placeholder="请输入手机号">
 				</div>
 			</div>
@@ -37,7 +37,7 @@
 					<label class="weui-label">密码</label>
 				</div>
 				<div class="weui-cell__bd">
-					<input class="weui-input" id="password" name="password" type="password" placeholder="请输入密码">
+					<input class="weui-input" id="password" name="password" type="password"  placeholder="请输入密码">
 				</div>
 			</div>
 			
@@ -46,7 +46,7 @@
 					<label class="weui-label">姓名</label>
 				</div>
 				<div class="weui-cell__bd">
-					<input class="weui-input" id="name" name="name" type="text" placeholder="请输入姓名">
+					<input class="weui-input" id="name" name="name" type="text"  placeholder="请输入姓名">
 				</div>
 			</div>
 			
@@ -75,8 +75,8 @@
 		</div>
 	</form>
 	<div class="weui-footer weui-footer_fixed-bottom">
-  <p class="weui-footer__text">Copyright © 2008-2017 Alan, Tong</p>
-</div>
+  	<p class="weui-footer__text">Copyright © 2008-2018 兔少</p>
+	</div>
 
 <script src="../lib/jquery-2.1.4.js"></script>
 <script src="../lib/fastclick.js"></script>
@@ -87,8 +87,40 @@
 </script>
 <script src="../js/jquery-weui.js"></script>
 <script> 	
+
  	$("#showTooltips").click(function() {
-	    $.ajax({
+	    
+ 		var mobileNO = String($("#mobile").val());
+ 		if(mobileNO.length!=11 || !/1[3|4|5|7|8]\d{9}/.test(mobileNO)){
+ 			$.toptip('手机号格式不正确', 'error');
+ 			return;
+ 		}
+ 		var password = $("#password").val();
+ 		if(!password || password.length<6){
+ 			$("#password").focus();
+ 			$.toptip('密码至少6位', 'error');
+ 			
+ 			return;
+ 		}
+ 		var name = $("#name").val();
+ 		if(!name){
+ 			$.toptip('用户名不能为空', 'error');
+ 			$("#name").focus();
+ 			return;
+ 		}
+ 		var nickName = $("#nickName").val();
+ 		if(!nickName){
+ 			$.toptip('昵称不能为空', 'error');
+ 			$("#nickName").focus();
+ 			return;
+ 		}
+ 		var alipayAccount = $("#alipayAccount").val();
+ 		if(!alipayAccount){
+ 			$.toptip('支付宝不能为空', 'error');
+ 			$("#alipayAccount").focus();
+ 			return;
+ 		}
+ 		$.ajax({
 		      url: '/loginRegister/register',
 		      type: 'POST',
 		      data : $('#registerForm').serialize(),
@@ -97,10 +129,10 @@
 		    		 $.toptip('手机号已被注册', 'error');
 		    	 }else{
 		    		 $.toptip('注册成功', 'success');
+		    		 window.location.href = response.view;
 		    	 }
 		    	}
 		    });
-		    return false;
 	}); 
 	
 </script>

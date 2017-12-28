@@ -74,11 +74,6 @@
 				</div>
 			</div>
 		</form>
-		<div class="weui-msg__extra-area">
-		    <div class="weui-footer">
-		      <p class="weui-footer__text">Copyright © 2008-2017 Alan Tong</p>
-		    </div>
-		  </div>
 	</div>
 </body>
 </html>

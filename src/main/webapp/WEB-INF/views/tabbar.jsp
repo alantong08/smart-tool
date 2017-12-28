@@ -16,15 +16,15 @@
 
   <body ontouchstart>
     <header class='demos-header'>
-      <h1 class="demos-title">欢迎您 童先生</h1>
-      <p class='demos-sub-title'>本app提供报单查询服务及各类活动</p>
+      <h1 class="demos-title">欢迎您 </h1>
+      <p class='demos-sub-title'>本app提供报单查询服务</p>
     </header>
 
     <div class="weui-tab">
       <div class="weui-tab__bd">
         <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active">
         <div class="weui-grids">
-      	<a href="buttons.html" class="weui-grid js_grid">
+      	<a href="/weuiUploadChart" class="weui-grid js_grid">
         <div class="weui-grid__icon">
           <img src="images/icon_nav_button.png" alt="">
         </div>
@@ -109,35 +109,8 @@
         </div>
       </div>
 
-      <div class="weui-tabbar">
-        <a href="#tab1" class="weui-tabbar__item weui-bar__item--on">
-          <span class="weui-badge" style="position: absolute;top: -.4em;right: 1em;">8</span>
-          <div class="weui-tabbar__icon">
-            <img src="/weui/demos/images/icon_nav_button.png" alt="">
-          </div>
-          <p class="weui-tabbar__label">主页</p>
-        </a>
-        <a href="#tab2" class="weui-tabbar__item">
-          <div class="weui-tabbar__icon">
-            <img src="/weui/demos/images/icon_nav_msg.png" alt="">
-          </div>
-          <p class="weui-tabbar__label">通讯录</p>
-        </a>
-        <a href="#tab3" class="weui-tabbar__item">
-          <div class="weui-tabbar__icon">
-            <img src="/weui/demos/images/icon_nav_article.png" alt="">
-          </div>
-          <p class="weui-tabbar__label">发现</p>
-        </a>
-        <a href="#tab4" class="weui-tabbar__item">
-          <div class="weui-tabbar__icon">
-            <img src="/weui/demos/images/icon_nav_cell.png" alt="">
-          </div>
-          <p class="weui-tabbar__label">我</p>
-        </a>
-      </div>
-    </div>
-
+ <%@ include file="footer.jsp"%>
+ 
 <script src="/weui/lib/jquery-2.1.4.js"></script>
 <script src="/weui/lib/fastclick.js"></script>
 <script>
