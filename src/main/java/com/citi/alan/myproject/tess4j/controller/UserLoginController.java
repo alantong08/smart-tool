@@ -27,10 +27,10 @@ public class UserLoginController {
         request.getSession().setAttribute("mobile", mobile);
         String viewName = "";
         UserLoginDetail userLoginDetail = null;  
-        try {
+        try { 
             userLoginDetail = userInfoService.login(mobile, password);
             if (userLoginDetail.getMobile() != null) {               
-                viewName = "/user/uploadOrderChart";
+                viewName = "/tabbar";
             }else{
             	userLoginDetail.setMessage("failed");
                 viewName = "/login";

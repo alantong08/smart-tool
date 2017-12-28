@@ -23,6 +23,7 @@
 		$("#orderNum").textbox('setValue', orderDetail.orderNum);
 		$("#merchantName").textbox('setValue', orderDetail.merchantName);
 		$("#actualPrice").textbox('setValue', orderDetail.actualPrice);
+		$("#discountedPrice").textbox('setValue', orderDetail.discountedPrice);
 		$("#transferType").combobox('setValue', orderDetail.transferType);
 		$("#activityType").combobox('setValue', orderDetail.activityType);
 		$("#rate").textbox('setValue', orderDetail.rate);
@@ -60,10 +61,7 @@
 				<input id="date" name="date" class="easyui-datebox" label="扫码日期:"
 					data-options="required:true" style="width: 100%"></input>
 			</div>
-			<div style="margin-bottom: 10px">
-				<input id="name" name="name" class="easyui-textbox"
-					data-options="required:true" label="姓名:" style="width: 100%"></input>
-			</div>
+
 			<div style="margin-bottom: 10px">
 				<input id="nickName" name="nickName" class="easyui-textbox"
 					data-options="required:true" label="群昵称:" style="width: 100%"></input>
@@ -79,6 +77,10 @@
 			<div style="margin-bottom: 10px">
 				<input id="actualPrice" name="actualPrice" class="easyui-textbox"
 					data-options="required:true" label="扫码金额:" style="width: 100%"></input>
+			</div>
+			<div style="margin-bottom: 10px">
+				<input id="discountedPrice" name="discountedPrice" class="easyui-textbox"
+					data-options="required:true" label="优惠金额:" style="width: 100%"></input>
 			</div>
 			<div style="margin-bottom: 10px">
 				<select id="transferType" name="transferType"

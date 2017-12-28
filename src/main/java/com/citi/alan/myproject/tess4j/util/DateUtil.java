@@ -9,7 +9,7 @@ public class DateUtil {
     
     public static String getFormatDateStr(String pattern){
         LocalDateTime dateTime = LocalDateTime.now();
-        String result = "";
+        String result = ""; 
         try{
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
             result = dateTime.format(formatter);

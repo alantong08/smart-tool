@@ -19,10 +19,11 @@ public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    private Date scanDate;
+    private String scanDate;
     private String orderNum;
     private String merchantName;
-    private String actualAmount;
+    private Float actualAmount;
+    private Float discountedAmount;
     private String transferType;
     private String activityType;
     private String rate;
@@ -30,7 +31,7 @@ public class OrderDetail {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserInfo userInfo;
-    
+    private String createdDate;
 
     public Integer getId() {
         return id;
@@ -39,13 +40,14 @@ public class OrderDetail {
         this.id = id;
     }
 
-    public Date getScanDate() {
-        return scanDate;
-    }
-    public void setScanDate(Date scanDate) {
-        this.scanDate = scanDate;
-    }
-    public String getOrderNum() {
+
+    public String getScanDate() {
+		return scanDate;
+	}
+	public void setScanDate(String scanDate) {
+		this.scanDate = scanDate;
+	}
+	public String getOrderNum() {
         return orderNum;
     }
     public void setOrderNum(String orderNum) {
@@ -57,13 +59,21 @@ public class OrderDetail {
     public void setMerchantName(String merchantName) {
         this.merchantName = merchantName;
     }
-    public String getActualAmount() {
-        return actualAmount;
-    }
-    public void setActualAmount(String actualAmount) {
-        this.actualAmount = actualAmount;
-    }
-    public String getTransferType() {
+
+    public Float getActualAmount() {
+		return actualAmount;
+	}
+	public void setActualAmount(Float actualAmount) {
+		this.actualAmount = actualAmount;
+	}
+	
+	public Float getDiscountedAmount() {
+		return discountedAmount;
+	}
+	public void setDiscountedAmount(Float discountedAmount) {
+		this.discountedAmount = discountedAmount;
+	}
+	public String getTransferType() {
         return transferType;
     }
     public void setTransferType(String transferType) {
@@ -89,7 +99,13 @@ public class OrderDetail {
     }
     
 
-    public UserInfo getUserInfo() {
+	public String getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(String createdDate) {
+		this.createdDate = createdDate;
+	}
+	public UserInfo getUserInfo() {
         return userInfo;
     }
     public void setUserInfo(UserInfo userInfo) {
@@ -100,8 +116,5 @@ public class OrderDetail {
         return ToStringBuilder.reflectionToString(this);
       
     }
-    
-    
-    
-    
+
 }

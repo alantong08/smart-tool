@@ -16,6 +16,13 @@ public class IndexController {
         return "register";
     }
     
+    @RequestMapping(value={"weui-register"})
+    public String weuiRegister(){
+        return "weui-register";
+    }
+    
+    
+    
     @RequestMapping(value={"upload"})
     public String uplaod(){
         return "/user/uploadOrderChart";
@@ -32,7 +39,22 @@ public class IndexController {
     }
     
     @RequestMapping(value={"/user/reportResult"})
-    public String reportResult(){
+    public String reportResult(){ 
         return "/user/reportResult";
+    }
+    
+    @RequestMapping(value={"/user/confirm"})
+    public String confirm(){ 
+        return "/user/confirm";
+    }
+    
+    @RequestMapping(value={"tabbar"})
+    public String tabbar(){ 
+        return "tabbar";
+    }
+    
+    @RequestMapping(value={"weuiLogin"})
+    public String weuiLogin(){ 
+        return "weui-login";
     }
 }

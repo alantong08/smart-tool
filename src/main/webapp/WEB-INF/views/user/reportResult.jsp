@@ -13,19 +13,22 @@
 </head>
 <body>
 	<div class="easyui-navpanel">
-		<header>
-			<div class="m-toolbar">
-				<span class="m-title">报单成功</span>
-			</div>
-		</header>
+ <header>
+            <div class="m-toolbar">
+                <div class="m-title">报单成功</div>
+                <div class="m-left">
+                    <a href="／user/confirm" class="easyui-linkbutton m-back" plain="true" outline="true">后退</a>
+                </div>
+            </div>
+        </header>
 
 		<div style="text-align: center; margin-top: 30px">
 			<a href="/user/uploadOrderChart" id="register" class="easyui-linkbutton"
-				style="width: 100px; height: 35px"><span style="font-size: 16px">再报一单</span></a>
+				style="width: 200px; height: 35px"><span style="font-size: 16px">再报一单</span></a>
 		</div>
 		<div style="text-align: center; margin-top: 30px">
 			<a href="/user/uploadOrderChart" id="check" class="easyui-linkbutton"
-				style="width: 100px; height: 35px"><span style="font-size: 16px">查询报单记录</span></a>
+				style="width: 200px; height: 35px"><span style="font-size: 16px">查询报单记录</span></a>
 		</div>
 
 	</div>

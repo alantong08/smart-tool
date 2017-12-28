@@ -3,6 +3,7 @@ package com.citi.alan.myproject.tess4j.service.impl;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +25,7 @@ import com.citi.alan.myproject.tess4j.enu.TransferType;
 import com.citi.alan.myproject.tess4j.model.BillOrderDetail;
 import com.citi.alan.myproject.tess4j.service.api.BillOrderDetectorService;
 import com.citi.alan.myproject.tess4j.service.api.MerchantService;
+import com.citi.alan.myproject.tess4j.util.DateUtil;
 import com.citi.alan.myproject.tess4j.util.ImageUtil;
 import com.citi.alan.myproject.tess4j.util.TessercatUtil;
 
@@ -66,8 +68,12 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 	    boolean flag = false;
 	    try {
             BeanUtils.copyProperties(orderDetail, billOrderDetail);
+            orderDetail.setScanDate(billOrderDetail.getDate());
+            orderDetail.setActualAmount(billOrderDetail.getActualPrice());
+            orderDetail.setDiscountedAmount(billOrderDetail.getDiscountedPrice());
             UserInfo userInfo = userInfoDao.findByMobile(billOrderDetail.getMobile());
             orderDetail.setUserInfo(userInfo);
+            orderDetail.setCreatedDate(DateUtil.getFormatDateStr("yyyy/MM/dd HH:mm:ss"));
             orderDetailDao.save(orderDetail);
             flag = true;
         } catch (IllegalAccessException e) {
@@ -88,7 +94,7 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 			if (result.contains(alipayIdentifier)) {
 				System.out.println("this is alipay");
 				billOrderDetail = processAlipayOrder(result, activityType);
-				// chceckMerchantIsAllowed();
+				// chceckMerchantIsAllowed(); 
 			} else if (result.contains(elianIdentifier)) {
 				System.out.println("this is elian pay");
 				billOrderDetail = processElianOrder(result, activityType);
@@ -187,13 +193,10 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 			
 			Merchant merchant = map.get(merchantsNo);
 			billOrderDetail.setMerchantName(merchant.getMerchantName());
-			//String merchantName = MerchantsDict.merchants.get(merchantsNo);
-			//billOrderDetail.setMerchantName(merchantName);
 		}catch(Exception se) {
 			se.printStackTrace();
 		}
 
-		
 		try {
 			String orderAmount = resultMap.get("订单金额").replaceAll("o", "0");
 			Float actualAmount = Float.valueOf(orderAmount);
@@ -202,6 +205,7 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 			if (!StringUtils.isEmpty(discountedPrice)) {
 				Float disPrice = Float.valueOf(discountedPrice);
 				actualAmount = actualAmount - disPrice;
+				billOrderDetail.setDiscountedPrice(disPrice);
 			}
 			billOrderDetail.setActualPrice(actualAmount);
 		} catch (Exception se) {
@@ -268,16 +272,13 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 			
 			Merchant merchant = map.get(merchantsNo);
 			billOrderDetail.setMerchantName(merchant.getMerchantName());
-			
-//			String merchantName = MerchantsDict.merchants.get(merchantsNo);
-//			billOrderDetail.setMerchantName(merchantName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		try {
-			String orderAmount = resultMap.get("订单金额").replaceAll("o", "0");
-			orderAmount = orderAmount.substring(0, orderAmount.indexOf("元")).replace(" ", "");
+			String orderAmount = resultMap.get("订单金额").replaceAll("o", "0").replaceAll(",", "");
+			orderAmount = orderAmount.substring(0, orderAmount.indexOf(".")).replace(" ", "");
 			Float actualAmount = Float.valueOf(orderAmount);
 			billOrderDetail.setActualPrice(actualAmount);
 		} catch (Exception se) {
@@ -308,9 +309,6 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 			}
 			resultMap.put(key.trim(), value.trim());
 		}
-		for (Map.Entry<String, String> entry : resultMap.entrySet()) {
-			System.out.println("key:" + entry.getKey() + "\t value:" + entry.getValue());
-		}
 
 		try {
 			String date = resultMap.get("支付时间");
@@ -328,8 +326,6 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 			String merchantsNo = orderNum.substring(0, 12);
 			Merchant merchant = map.get(merchantsNo);
 			billOrderDetail.setMerchantName(merchant.getMerchantName());
-//			String merchantName = MerchantsDict.merchants.get(merchantsNo);
-//			billOrderDetail.setMerchantName(merchantName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

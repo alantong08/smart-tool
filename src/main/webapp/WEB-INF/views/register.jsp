@@ -80,7 +80,6 @@
 						class="easyui-linkbutton" style="width: 100%; height: 40px"><span
 						style="font-size: 16px">注册</span></a>
 				</div>
-
 			</div>
 		</form>
 	</div>

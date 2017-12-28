@@ -38,7 +38,7 @@ public class TesseractController {
 	private final static String DATE_PATTERN = "yyyyMMddHHmmssSSS";
 
 	@Autowired
-	private BillOrderDetectorService billOrderDetectorService;
+	private BillOrderDetectorService billOrderDetectorService; 
 
 	@Autowired
 	private UserInfoService userInfoService;
