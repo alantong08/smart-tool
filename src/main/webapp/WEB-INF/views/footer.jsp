@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-     <div class="weui-tabbar">
+     <div class="weui-tabbar weui-footer_fixed-bottom">
        <a href="/tabbar" class="weui-tabbar__item weui-bar__item--on">
-         <span class="weui-badge" style="position: absolute;top: -.4em;right: 1em;">8</span>
          <div class="weui-tabbar__icon">
            <img src="/weui/demos/images/icon_nav_button.png" alt="">
          </div>

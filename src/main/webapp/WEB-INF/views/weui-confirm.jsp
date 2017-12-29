@@ -2,22 +2,21 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>jQuery WeUI</title>
+    <title>报单系统</title>
     <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-<meta name="description" content="report system">
 
-<link rel="stylesheet" href="/weui/lib/weui.min.css">
-<link rel="stylesheet" href="/weui/css/jquery-weui.css">
-<link rel="stylesheet" href="/weui/demos/css/demos.css">
+<link rel="stylesheet" href="/lib/weui.min.css">
+<link rel="stylesheet" href="/css/jquery-weui.css">
+<link rel="stylesheet" href="/demos/css/demos.css">
 
   </head>
 
   <body ontouchstart>
-    <header class='demos-header'>
-      <p class='demos-sub-title'>报单数据确认</p>
-    </header>
+      <header class='demos-header'>
+      	<p class='demos-sub-title'>报单数据确认</p>
+      </header>
 
    	<form id="ff"  method="post" >
 		<div class="weui-cells weui-cells_form">
@@ -94,20 +93,20 @@
 
  <%@ include file="footer.jsp"%>
  
-<script src="/weui/lib/jquery-2.1.4.js"></script>
-<script src="/weui/lib/fastclick.js"></script>
+<script src="/lib/jquery-2.1.4.js"></script>
+<script src="/lib/fastclick.js"></script>
 <script>
   $(function() {
     FastClick.attach(document.body);
   });
 </script>
-<script src="/weui/js/jquery-weui.js"></script>
+<script src="/js/jquery-weui.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		
 		var orderDetail = $.parseJSON('${billDetail}');
 		
-		$("#scanDate").val(orderDetail.date);
+		$("#scanDate").val(orderDetail.scanDate);
 		$("#name").val(orderDetail.name);
 		$("#nickName").val(orderDetail.nickName);
 		$("#orderNum").val(orderDetail.orderNum);

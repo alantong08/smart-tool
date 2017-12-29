@@ -3,14 +3,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>jQuery WeUI</title>
+<title>报单系统</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, user-scalable=no">
-<link rel="stylesheet" href="../lib/weui.css">
-<link rel="stylesheet" href="../css/jquery-weui.css">
-<link rel="stylesheet" href="../css/demos.css">
+<meta name="viewport"  content="width=device-width, initial-scale=1, user-scalable=no">
+<link rel="stylesheet" href="/lib/weui.css">
+<link rel="stylesheet" href="/css/jquery-weui.css">
+<link rel="stylesheet" href="/css/demos.css">
 
 </head>
 
@@ -78,14 +77,14 @@
   	<p class="weui-footer__text">Copyright © 2008-2018 兔少</p>
 	</div>
 
-<script src="../lib/jquery-2.1.4.js"></script>
-<script src="../lib/fastclick.js"></script>
+<script src="/lib/jquery-2.1.4.js"></script>
+<script src="/lib/fastclick.js"></script>
 <script>
 	$(function() {
 		FastClick.attach(document.body);
 	});
 </script>
-<script src="../js/jquery-weui.js"></script>
+<script src="/js/jquery-weui.js"></script>
 <script> 	
 
  	$("#showTooltips").click(function() {
@@ -99,7 +98,6 @@
  		if(!password || password.length<6){
  			$("#password").focus();
  			$.toptip('密码至少6位', 'error');
- 			
  			return;
  		}
  		var name = $("#name").val();

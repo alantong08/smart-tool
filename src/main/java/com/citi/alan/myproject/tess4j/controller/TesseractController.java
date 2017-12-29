@@ -2,7 +2,6 @@ package com.citi.alan.myproject.tess4j.controller;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -10,15 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.citi.alan.myproject.tess4j.entity.Merchant;
 import com.citi.alan.myproject.tess4j.entity.UserInfo;
@@ -101,5 +99,20 @@ public class TesseractController {
 	    return responseResult;
 	    
 	}
+	
+	
+    @RequestMapping(value = "/searchBillOrder", method = RequestMethod.POST)
+    @ResponseBody
+    ModelAndView search(@RequestParam("mobile") String mobile, HttpServletRequest request) throws JsonProcessingException {
+        List<BillOrderDetail> billOrderDetails = billOrderDetectorService.getBillOrderDetailList(mobile);
+        ModelAndView mView = new ModelAndView("weui-search-bar");
+        mView.addObject("data", billOrderDetails);
+        if(billOrderDetails.size()==0){
+            mView.addObject("searchFlag", true);
+        }
+        mView.addObject("mobileNo", mobile);
+        return mView;
+
+    }
 
 }

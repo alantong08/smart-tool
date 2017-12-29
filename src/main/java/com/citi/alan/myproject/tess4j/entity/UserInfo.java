@@ -43,6 +43,11 @@ public class UserInfo {
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
+    public UserInfo(){};
+    
+    public UserInfo(String mobile){
+        this.mobile = mobile;
+    }
 
     public Integer getUserId() {
         return userId;

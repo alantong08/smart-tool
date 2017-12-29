@@ -1,7 +1,10 @@
 package com.citi.alan.myproject.tess4j.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class IndexController {
@@ -73,6 +76,10 @@ public class IndexController {
         return "/weui-msg";
     }
     
-    
-    
+    @RequestMapping(value={"/weiuiSearchBar"})
+    public String weiuiSearchBar(HttpServletRequest request){
+        return "/weui-search-bar";
+    }
+
+
 }

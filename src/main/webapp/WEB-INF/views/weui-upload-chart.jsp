@@ -2,15 +2,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>jQuery WeUI</title>
+    <title>报单系统</title>
     <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-<meta name="description" content="report system">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-<link rel="stylesheet" href="/weui/lib/weui.min.css">
-<link rel="stylesheet" href="/weui/css/jquery-weui.css">
-<link rel="stylesheet" href="/weui/demos/css/demos.css">
+	<link rel="stylesheet" href="/lib/weui.min.css">
+	<link rel="stylesheet" href="/css/jquery-weui.css">
+	<link rel="stylesheet" href="/css/demos.css">
 
   </head>
 
@@ -19,7 +18,7 @@
       <h2 class="demos-title">报单系统</h2>
     </header>
 
-   	<form id="ff"  action="/user/tess4j/submit/" method="post" enctype="multipart/form-data">
+   	<form id="ff" method="post" enctype="multipart/form-data">
 		<div class="weui-cells weui-cells_form">
 	      <div class="weui-cell weui-cell_select weui-cell_select-after">
 	        <div class="weui-cell__hd">
@@ -49,37 +48,58 @@
 
 		<div class="weui-btn-area">
 			<a class="weui-btn weui-btn_primary" id="showTooltips" onclick="$('#ff').submit()">提交</a>
-		
 		</div>
+		
+	<div class="demos-content-padded">
+      <div class="weui-loadmore">
+        <i class="weui-loading"></i>
+        <span class="weui-loadmore__tips" id="loadingSpan" style="display:none">正在上传</span>
+      </div>
+      </div>
 	</form>
 
  <%@ include file="footer.jsp"%>
  
-<script src="/weui/lib/jquery-2.1.4.js"></script>
-<script src="/weui/lib/fastclick.js"></script>
+<script src="/lib/jquery-2.1.4.js"></script>
+<script src="/lib/fastclick.js"></script>
 <script>
   $(function() {
     FastClick.attach(document.body);
   });
 </script>
-<script src="/weui/js/jquery-weui.js"></script>
+<script src="/js/jquery-weui.js"></script>
 <script>
- 	/**$("#showTooltips").click(function() {
-	    $.ajax({
-		      url: '/user/tess4j/submit/',
-		      type: 'POST',
-		      data : $('#ff').serialize(),
-		      success: function(response){
+
+ 	
+ 	$(document).ready(function () {
+ 	    $("#ff").submit(function (event) {
+ 	        //disable the default form submission
+ 	        event.preventDefault();
+ 	       $("#loadingSpan").toggle();
+ 	        var formData = $(this).serialize();
+ 	        $.ajax({
+ 	            url: '/user/tess4j/submit/',
+ 	            type: 'POST',
+ 	            data: formData,
+ 	            async: false,
+ 	            cache: false,
+ 	            contentType: false,
+ 	            processData: false,
+		        success: function(response){
 		    	 if(response.message == 'failed'){
 		    		 $.toptip('上传订单出现问题', 'error');
 		    	 }else{
 		    		 window.location.href = response.view;
 		    	 }
-		    	}
-		    });
-		    return false; 
-	}); 
-	**/
+		    	},
+ 	            error: function(){
+ 	                alert("error in ajax form submission");
+ 	            }
+ 	        });
+
+ 	        return false;
+ 	    });
+ 	});
 </script>
   </body>
 </html>

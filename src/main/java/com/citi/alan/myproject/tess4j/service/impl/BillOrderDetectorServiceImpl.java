@@ -3,8 +3,9 @@ package com.citi.alan.myproject.tess4j.service.impl;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -63,14 +64,35 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 		map = merchantService.getMerchantMap();
 	}
 	
+	public List<BillOrderDetail> getBillOrderDetailList(String mobile){
+	    List<BillOrderDetail> billOrderDetails = new ArrayList<BillOrderDetail>();
+	    try{
+	        UserInfo userInfo = userInfoDao.findByMobile(mobile);
+	        if(userInfo==null){
+	            return billOrderDetails;
+	        }
+	        List<OrderDetail> orderDetails = orderDetailDao.findByUserInfo(userInfo);	      
+	        if(orderDetails!=null){
+	            for (OrderDetail orderDetail : orderDetails) {
+	                BillOrderDetail billOrderDetail = new BillOrderDetail();
+	                BeanUtils.copyProperties(billOrderDetail, orderDetail);
+	                billOrderDetails.add(billOrderDetail);
+	            }
+
+	        }
+	    }catch(Exception se){
+	        se.printStackTrace();
+	    }
+	    return billOrderDetails;
+	}
+	
 	public boolean saveOrderDetail(BillOrderDetail billOrderDetail){
 	    OrderDetail orderDetail = new OrderDetail();
 	    boolean flag = false;
 	    try {
             BeanUtils.copyProperties(orderDetail, billOrderDetail);
-            orderDetail.setScanDate(billOrderDetail.getDate());
-            orderDetail.setActualAmount(billOrderDetail.getActualPrice());
-            orderDetail.setDiscountedAmount(billOrderDetail.getDiscountedPrice());
+            Merchant merchant = map.get(billOrderDetail.getMerchantName());
+            billOrderDetail.setMerchantName(merchant.getMerchantName());
             UserInfo userInfo = userInfoDao.findByMobile(billOrderDetail.getMobile());
             orderDetail.setUserInfo(userInfo);
             orderDetail.setCreatedDate(DateUtil.getFormatDateStr("yyyy/MM/dd HH:mm:ss"));
@@ -218,7 +240,7 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
         String month = date.substring(5, 7);
         String day = date.substring(8, 10);
        // billOrderDetail.setDate(month + "/" + day + "/" + year);
-        billOrderDetail.setDate(year+"-"+month+"-"+day);
+        billOrderDetail.setScanDate(year+"-"+month+"-"+day);
     }
 
 	/**
@@ -280,8 +302,7 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 		try {
 			String orderAmount = resultMap.get("订单金额").replaceAll("o", "0").replaceAll(",", "");
 			orderAmount = orderAmount.substring(0, orderAmount.indexOf(".")).replace(" ", "");
-			Float actualAmount = Float.valueOf(orderAmount);
-			billOrderDetail.setActualPrice(actualAmount);
+			billOrderDetail.setActualPrice(Float.valueOf(orderAmount));
 		} catch (Exception se) {
 			se.printStackTrace();
 		}
@@ -331,8 +352,7 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 
 		try {
 			String orderAmount = resultMap.get("订单金额").substring(1).replaceAll("o", "0").replaceAll(" ", "");
-			Float actualAmount = Float.valueOf(orderAmount);
-			billOrderDetail.setActualPrice(actualAmount);
+			billOrderDetail.setActualPrice(Float.valueOf(orderAmount));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -7,27 +7,29 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public class BillOrderDetail implements Serializable{
 
     private static final long serialVersionUID = 1L;
-    private String date;
+    private String scanDate;
     private String name;
     private String nickName;
     private String orderNum;
     private String merchantName;
     private String activityType;
     private String rate; 
-    private float actualPrice;
-    private float discountedPrice;
-    private float totalPrice;
+    private Float actualPrice;
+    private Float discountedPrice;
+    private Float totalPrice;
     private String transferType;
     private String comments;
     private String alipayAccount;
     private String mobile;
     
-    public String getDate() {
-        return date;
+
+    public String getScanDate() {
+        return scanDate;
     }
-    public void setDate(String date) {
-        this.date = date;
+    public void setScanDate(String scanDate) {
+        this.scanDate = scanDate;
     }
+
     public String getName() {
         return name;
     }
@@ -72,28 +74,27 @@ public class BillOrderDetail implements Serializable{
     public void setComments(String comments) {
         this.comments = comments;
     }
-    
 
-	public float getActualPrice() {
-		return actualPrice;
-	}
-	public void setActualPrice(float actualPrice) {
-		this.actualPrice = actualPrice;
-	}
-	public float getDiscountedPrice() {
-		return discountedPrice;
-	}
-	public void setDiscountedPrice(float discountedPrice) {
-		this.discountedPrice = discountedPrice;
-	}
-	public float getTotalPrice() {
-		return totalPrice;
-	}
-	public void setTotalPrice(float totalPrice) {
-		this.totalPrice = totalPrice;
-	}
-	
-	public String getActivityType() {
+
+    public Float getActualPrice() {
+        return actualPrice;
+    }
+    public void setActualPrice(Float actualPrice) {
+        this.actualPrice = actualPrice;
+    }
+    public Float getDiscountedPrice() {
+        return discountedPrice;
+    }
+    public void setDiscountedPrice(Float discountedPrice) {
+        this.discountedPrice = discountedPrice;
+    }
+    public Float getTotalPrice() {
+        return totalPrice;
+    }
+    public void setTotalPrice(Float totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+    public String getActivityType() {
 		return activityType;
 	}
 	public void setActivityType(String activityType) {

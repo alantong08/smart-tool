@@ -22,8 +22,8 @@ public class OrderDetail {
     private String scanDate;
     private String orderNum;
     private String merchantName;
-    private Float actualAmount;
-    private Float discountedAmount;
+    private Float actualPrice;
+    private Float discountedPrice;
     private String transferType;
     private String activityType;
     private String rate;
@@ -60,20 +60,20 @@ public class OrderDetail {
         this.merchantName = merchantName;
     }
 
-    public Float getActualAmount() {
-		return actualAmount;
-	}
-	public void setActualAmount(Float actualAmount) {
-		this.actualAmount = actualAmount;
-	}
-	
-	public Float getDiscountedAmount() {
-		return discountedAmount;
-	}
-	public void setDiscountedAmount(Float discountedAmount) {
-		this.discountedAmount = discountedAmount;
-	}
-	public String getTransferType() {
+
+	public Float getActualPrice() {
+        return actualPrice;
+    }
+    public void setActualPrice(Float actualPrice) {
+        this.actualPrice = actualPrice;
+    }
+    public Float getDiscountedPrice() {
+        return discountedPrice;
+    }
+    public void setDiscountedPrice(Float discountedPrice) {
+        this.discountedPrice = discountedPrice;
+    }
+    public String getTransferType() {
         return transferType;
     }
     public void setTransferType(String transferType) {

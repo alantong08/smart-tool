@@ -1171,7 +1171,7 @@ button.weui-vcode-btn{
   display:-webkit-box;
   display:-webkit-flex;
   display:flex;
-  position:absolute;
+  postion:fixed;
   z-index:500;
   bottom:0;
   width:100%;
