@@ -30,7 +30,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
-@RequestMapping("/user/tess4j")
+@RequestMapping("/user")
 public class TesseractController {
 
 	@Value("${upload.file.path}")
@@ -48,21 +48,23 @@ public class TesseractController {
 	private MerchantService merchantService;
 	
 
-	@RequestMapping(value = "/submit", method = RequestMethod.POST)
+	@RequestMapping(value = "/tess4j/submit", method = RequestMethod.POST)
 	@ResponseBody
 	public ModelAndView handleUploadFile(HttpServletRequest request) throws JsonProcessingException {
 		BillOrderDetail detail = null;
 		try {
 			String activityType = request.getParameter("activityType");
-			MultipartFile file = ((MultipartHttpServletRequest) request).getFile("file-order");
+			MultipartFile multipart = ((MultipartHttpServletRequest) request).getFile("file-order");
 			String mobile = (String) request.getSession().getAttribute("mobile");
 			UserInfo user = userInfoService.getUserByMobile(mobile);
-			String originalFileName = file.getOriginalFilename();
-			if (file != null && originalFileName != null && originalFileName.length() > 0) {
-				String newFileName = DateUtil.getFormatDateStr(DATE_PATTERN)
-						+ originalFileName.substring(originalFileName.lastIndexOf("."));
+			String originalFileName = multipart.getOriginalFilename();
+			if (multipart != null && originalFileName != null && originalFileName.length() > 0) {
+				//File convFile = new File(uploadFilePath+multipart.getOriginalFilename());
+				//multipart.transferTo(convFile);
+				String newFileName = DateUtil.getFormatDateStr(DATE_PATTERN) + originalFileName.substring(originalFileName.lastIndexOf("."));
 				File newFile = new File(uploadFilePath + newFileName);
-				file.transferTo(newFile); 
+				//Thumbnails.of(convFile).size(800, 1000).toFile(newFile);
+				multipart.transferTo(newFile);
 				detail = billOrderDetectorService.detetctBillOrderDetail(newFile, activityType, user);
 			}
 		} catch (Exception se) {
@@ -76,7 +78,7 @@ public class TesseractController {
 		return mView;
 	}
 
-	@RequestMapping(value = "/merchant")
+	@RequestMapping(value = "/tess4j/merchant")
 	@ResponseBody
 	List<Merchant> getMerchantList(){
 		Map<String, Merchant>  map = merchantService.getMerchantMap();
@@ -87,7 +89,7 @@ public class TesseractController {
 		return merchants;
 	}
 	
-	@RequestMapping(value = "/saveBillOrder", method = RequestMethod.POST)
+	@RequestMapping(value = "/tess4j/saveBillOrder", method = RequestMethod.POST)
 	@ResponseBody
 	ResponseResult saveForm(BillOrderDetail billOrderDetail, HttpServletRequest request)  {
 	    String mobile = (String) request.getSession().getAttribute("mobile");
@@ -101,7 +103,7 @@ public class TesseractController {
 	}
 	
 	
-    @RequestMapping(value = "/searchBillOrder", method = RequestMethod.POST)
+    @RequestMapping(value = "/tess4j/searchBillOrder", method = RequestMethod.POST)
     @ResponseBody
     ModelAndView search(@RequestParam("mobile") String mobile, HttpServletRequest request) throws JsonProcessingException {
         List<BillOrderDetail> billOrderDetails = billOrderDetectorService.getBillOrderDetailList(mobile);
@@ -114,5 +116,6 @@ public class TesseractController {
         return mView;
 
     }
+    
 
 }

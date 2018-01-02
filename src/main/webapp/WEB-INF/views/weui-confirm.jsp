@@ -9,7 +9,7 @@
 
 <link rel="stylesheet" href="/lib/weui.min.css">
 <link rel="stylesheet" href="/css/jquery-weui.css">
-<link rel="stylesheet" href="/demos/css/demos.css">
+<link rel="stylesheet" href="/css/demos.css">
 
   </head>
 
@@ -26,7 +26,7 @@
 	      </div>
 	      <div class="weui-cell">
 	        <div class="weui-cell__hd"><label class="weui-label">姓名:</label></div>
-	        <div class="weui-cell__bd"><input class="weui-input" type="text" id="name" name="name"/></div>
+	        <div class="weui-cell__bd"><input class="weui-input" type="text" id="userName" name="userName"/></div>
 	      </div>
 	      <div class="weui-cell">
 	        <div class="weui-cell__hd"><label class="weui-label">群昵称:</label></div>
@@ -46,10 +46,10 @@
 	        <div class="weui-cell__hd"><label class="weui-label">扫码金额:</label></div>
  			<div class="weui-cell__bd"><input class="weui-input" type="text" id="actualPrice" name="actualPrice"/></div>
 		  </div>
-	      <div class="weui-cell">
+<!-- 	      <div class="weui-cell">
 	        <div class="weui-cell__hd"><label class="weui-label">优惠金额:</label></div>
  			<div class="weui-cell__bd"><input class="weui-input" type="text" id="discountedPrice" name="discountedPrice"/></div>
-		  </div>
+		  </div> -->
 		  <div class="weui-cell  weui-cell_select weui-cell_select-after">
 	        <div class="weui-cell__hd"><label class="weui-label">交易方式:</label></div>
  			<div class="weui-cell__bd">	          
@@ -91,7 +91,6 @@
 		</div>
 	</form>
 
- <%@ include file="footer.jsp"%>
  
 <script src="/lib/jquery-2.1.4.js"></script>
 <script src="/lib/fastclick.js"></script>
@@ -107,7 +106,7 @@
 		var orderDetail = $.parseJSON('${billDetail}');
 		
 		$("#scanDate").val(orderDetail.scanDate);
-		$("#name").val(orderDetail.name);
+		$("#userName").val(orderDetail.userName);
 		$("#nickName").val(orderDetail.nickName);
 		$("#orderNum").val(orderDetail.orderNum);
 		

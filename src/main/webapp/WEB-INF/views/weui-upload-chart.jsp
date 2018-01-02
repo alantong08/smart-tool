@@ -15,10 +15,10 @@
 
   <body ontouchstart>
     <header class='demos-header'>
-      <h2 class="demos-title">报单系统</h2>
+      <h3 class="demos-title">上传订单</h3>
     </header>
 
-   	<form id="ff" method="post" enctype="multipart/form-data">
+   	<form id="ff" method="post" action="/user/tess4j/submit/" enctype="multipart/form-data">
 		<div class="weui-cells weui-cells_form">
 	      <div class="weui-cell weui-cell_select weui-cell_select-after">
 	        <div class="weui-cell__hd">
@@ -47,17 +47,11 @@
 		</div>
 
 		<div class="weui-btn-area">
-			<a class="weui-btn weui-btn_primary" id="showTooltips" onclick="$('#ff').submit()">提交</a>
+			<a class="weui-btn weui-btn_primary" id="showTooltips" >提交</a>
 		</div>
 		
-	<div class="demos-content-padded">
-      <div class="weui-loadmore">
-        <i class="weui-loading"></i>
-        <span class="weui-loadmore__tips" id="loadingSpan" style="display:none">正在上传</span>
-      </div>
-      </div>
 	</form>
-
+	
  <%@ include file="footer.jsp"%>
  
 <script src="/lib/jquery-2.1.4.js"></script>
@@ -69,37 +63,10 @@
 </script>
 <script src="/js/jquery-weui.js"></script>
 <script>
-
- 	
- 	$(document).ready(function () {
- 	    $("#ff").submit(function (event) {
- 	        //disable the default form submission
- 	        event.preventDefault();
- 	       $("#loadingSpan").toggle();
- 	        var formData = $(this).serialize();
- 	        $.ajax({
- 	            url: '/user/tess4j/submit/',
- 	            type: 'POST',
- 	            data: formData,
- 	            async: false,
- 	            cache: false,
- 	            contentType: false,
- 	            processData: false,
-		        success: function(response){
-		    	 if(response.message == 'failed'){
-		    		 $.toptip('上传订单出现问题', 'error');
-		    	 }else{
-		    		 window.location.href = response.view;
-		    	 }
-		    	},
- 	            error: function(){
- 	                alert("error in ajax form submission");
- 	            }
- 	        });
-
- 	        return false;
- 	    });
- 	});
+$("#showTooltips").click(function() {
+	$.showLoading("订单处理中...");
+	$('#ff').submit();
+});
 </script>
   </body>
 </html>

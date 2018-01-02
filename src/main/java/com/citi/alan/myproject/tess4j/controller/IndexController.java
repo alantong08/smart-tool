@@ -6,13 +6,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Controller
 public class IndexController {
     
     @RequestMapping(value={"","/","index"})
-    public String index(){
-        return "login";
+    public String index(HttpServletRequest request){
+    	Object mobile = request.getSession().getAttribute("mobile");
+    	if(mobile==null)
+        return "weui-login";
+    	else
+    		return "tabbar";
     }
+    
     
     @RequestMapping(value={"register"})
     public String register(){
@@ -47,8 +54,14 @@ public class IndexController {
     }
     
     @RequestMapping(value={"tabbar"})
-    public String tabbar(){ 
-        return "tabbar";
+    public String tabbar(HttpServletRequest request){ 
+    	Object mobile = request.getSession().getAttribute("mobile");
+    	if(mobile==null)
+        return "weui-login";
+    	else
+    		return "tabbar";
+    
+
     }
     
     @RequestMapping(value={"weuiLogin"})
@@ -77,9 +90,16 @@ public class IndexController {
     }
     
     @RequestMapping(value={"/weiuiSearchBar"})
-    public String weiuiSearchBar(HttpServletRequest request){
-        return "/weui-search-bar";
+    public ModelAndView weiuiSearchBar(HttpServletRequest request){
+    		String mobile = (String) request.getSession().getAttribute("mobile");
+    		ModelAndView mView = new ModelAndView("weui-search-bar");
+    		mView.addObject("mobileNo",mobile);
+    		return mView;
     }
 
+    @RequestMapping(value={"/weuiRule"})
+    public String weiuiRule(HttpServletRequest request){
+        return "/weui-rule";
+    }
 
 }

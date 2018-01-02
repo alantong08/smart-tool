@@ -8,15 +8,15 @@ public class BillOrderDetail implements Serializable{
 
     private static final long serialVersionUID = 1L;
     private String scanDate;
-    private String name;
+    private String userName;
     private String nickName;
     private String orderNum;
     private String merchantName;
     private String activityType;
     private String rate; 
-    private Float actualPrice;
-    private Float discountedPrice;
-    private Float totalPrice;
+    private String actualPrice;
+    private String discountedPrice;
+    private String totalPrice;
     private String transferType;
     private String comments;
     private String alipayAccount;
@@ -30,13 +30,13 @@ public class BillOrderDetail implements Serializable{
         this.scanDate = scanDate;
     }
 
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getNickName() {
+    public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getNickName() {
         return nickName;
     }
     public void setNickName(String nickName) {
@@ -76,25 +76,25 @@ public class BillOrderDetail implements Serializable{
     }
 
 
-    public Float getActualPrice() {
-        return actualPrice;
-    }
-    public void setActualPrice(Float actualPrice) {
-        this.actualPrice = actualPrice;
-    }
-    public Float getDiscountedPrice() {
-        return discountedPrice;
-    }
-    public void setDiscountedPrice(Float discountedPrice) {
-        this.discountedPrice = discountedPrice;
-    }
-    public Float getTotalPrice() {
-        return totalPrice;
-    }
-    public void setTotalPrice(Float totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-    public String getActivityType() {
+    public String getActualPrice() {
+		return actualPrice;
+	}
+	public void setActualPrice(String actualPrice) {
+		this.actualPrice = actualPrice;
+	}
+	public String getDiscountedPrice() {
+		return discountedPrice;
+	}
+	public void setDiscountedPrice(String discountedPrice) {
+		this.discountedPrice = discountedPrice;
+	}
+	public String getTotalPrice() {
+		return totalPrice;
+	}
+	public void setTotalPrice(String totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+	public String getActivityType() {
 		return activityType;
 	}
 	public void setActivityType(String activityType) {

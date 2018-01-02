@@ -49,7 +49,7 @@
 	</form>
 	<div class="weui-footer weui-footer_fixed-bottom">
   <p class="weui-footer__text">Copyright © 2008-2018 兔少</p>
-</div>
+	</div>
 
 <script src="/lib/jquery-2.1.4.js"></script>
 <script src="/lib/fastclick.js"></script>

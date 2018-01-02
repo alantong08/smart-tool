@@ -42,7 +42,7 @@ public class UserInfoServiceImpl implements UserInfoService{
     public UserLoginDetail register(UserInfo data) {
         UserInfo userInfo = userInfoDao.findByMobile(data.getMobile());
         UserLoginDetail userLoginDetail = new UserLoginDetail();
-        if(userInfo!=null){
+        if(userInfo!=null){ 
             userLoginDetail.setRegistered(true);
         }else{
         		Role role = roleDao.findByRoleName("USER");
@@ -52,6 +52,22 @@ public class UserInfoServiceImpl implements UserInfoService{
             userInfoDao.save(data);
         }
         return userLoginDetail;
+    }
+    
+    public String updateUserInfo(UserInfo userInfo) {
+    		String result = "";
+        UserInfo storedUserInfo = getUserByMobile(userInfo.getMobile());
+        if (storedUserInfo!=null) {
+        		storedUserInfo.setAlipayAccount(userInfo.getAlipayAccount());
+        		storedUserInfo.setNickName(userInfo.getNickName());
+        		storedUserInfo.setPassword(userInfo.getPassword());
+        		userInfoDao.save(storedUserInfo);
+        		result = "success";
+        }else{
+        		result = "failed";
+        }
+        return result;
+    		
     }
 
 }

@@ -17,26 +17,16 @@
 
 
 	<header class='demos-header'>
-		<h1 class="demos-title">注册报单系统</h1>
+		<p class="demos-title">我的个人信息</p>
 	</header>
-	<form id="registerForm">
+	<form id="updateForm">
 		<div class="weui-cells weui-cells_form">
 			<div class="weui-cell">
 				<div class="weui-cell__hd">
 					<label class="weui-label">手机号</label>
 				</div>
 				<div class="weui-cell__bd">
-					<input class="weui-input" id="mobile" name="mobile" type="number" pattern="[0-9]*" 
-						placeholder="请输入手机号">
-				</div>
-			</div>
-
-			<div class="weui-cell">
-				<div class="weui-cell__hd">
-					<label class="weui-label">密码</label>
-				</div>
-				<div class="weui-cell__bd">
-					<input class="weui-input" id="password" name="password" type="password"  placeholder="请输入密码">
+					<input class="weui-input" id="mobile" name="mobile" type="number" readonly>
 				</div>
 			</div>
 			
@@ -45,16 +35,27 @@
 					<label class="weui-label">姓名</label>
 				</div>
 				<div class="weui-cell__bd">
-					<input class="weui-input" id="userName" name="userName" type="text"  placeholder="请输入姓名">
+					<input class="weui-input" id="userName" name="userName" type="text" readonly>
 				</div>
 			</div>
+
+			<div class="weui-cell">
+				<div class="weui-cell__hd">
+					<label class="weui-label">密码</label>
+				</div>
+				<div class="weui-cell__bd">
+					<input class="weui-input" id="password" name="password" type="password" >
+				</div>
+			</div>
+			
+
 			
 			<div class="weui-cell">
 				<div class="weui-cell__hd">
 					<label class="weui-label">群昵称</label>
 				</div>
 				<div class="weui-cell__bd">
-					<input class="weui-input" id="nickName" name="nickName" type="text" placeholder="请输入群昵称">
+					<input class="weui-input" id="nickName" name="nickName" type="text" >
 				</div>
 			</div>
 			
@@ -63,19 +64,17 @@
 					<label class="weui-label">支付宝</label>
 				</div>
 				<div class="weui-cell__bd">
-					<input class="weui-input" id="alipayAccount" name="alipayAccount" type="text" placeholder="请输入支付宝">
+					<input class="weui-input" id="alipayAccount" name="alipayAccount" type="text" >
 				</div>
 			</div>
 
 		</div>
 
 		<div class="weui-btn-area">
-			<a id="showTooltips" class="weui-btn weui-btn_primary">注册</a>
+			<a id="updateBtn" class="weui-btn weui-btn_primary">修改</a>
 		</div>
 	</form>
-	<div class="weui-footer weui-footer_fixed-bottom">
-  	<p class="weui-footer__text">Copyright © 2008-2018 兔少</p>
-	</div>
+ <%@ include file="footer.jsp"%>
 
 <script src="/lib/jquery-2.1.4.js"></script>
 <script src="/lib/fastclick.js"></script>
@@ -86,24 +85,24 @@
 </script>
 <script src="/js/jquery-weui.js"></script>
 <script> 	
+$(document).ready(function() {
+	
+	var userInfo = $.parseJSON('${userInfo}');
+	if(userInfo){
+		$("#mobile").val(userInfo.mobile);
+		$("#userName").val(userInfo.userName);
+		$("#password").val(userInfo.password);
+		$("#nickName").val(userInfo.nickName);
+		$("#alipayAccount").val(userInfo.alipayAccount);
+	}
+});
 
- 	$("#showTooltips").click(function() {
-	    
- 		var mobileNO = String($("#mobile").val());
- 		if(mobileNO.length!=11 || !/1[3|4|5|7|8]\d{9}/.test(mobileNO)){
- 			$.toptip('手机号格式不正确', 'error');
- 			return;
- 		}
+
+ 	$("#updateBtn").click(function() {
  		var password = $("#password").val();
  		if(!password || password.length<6){
  			$("#password").focus();
  			$.toptip('密码至少6位', 'error');
- 			return;
- 		}
- 		var name = $("#userName").val();
- 		if(!name){
- 			$.toptip('用户名不能为空', 'error');
- 			$("#userName").focus();
  			return;
  		}
  		var nickName = $("#nickName").val();
@@ -119,18 +118,16 @@
  			return;
  		}
  		$.ajax({
-		      url: '/loginRegister/register',
+		      url: '/loginRegister/updateUserInfo',
 		      type: 'POST',
-		      data : $('#registerForm').serialize(),
-		      success: function(response){
-		    	 if(response.registered == true){
-		    		 $.toptip('手机号已被注册', 'error');
-		    	 }else{
-		    		 $.toptip('注册成功', 'success');
-		    		 window.location.href = response.view;
-		    	 }
-		    	}
-		    });
+		      data : $('#updateForm').serialize(),
+		      success: function(){
+		    		 $.toptip('修改成功', 'success');
+		    	  },
+		    	  error:function(){
+		    		  $.toptip('修改失败', 'error');
+		    	  }});
+		
 	}); 
 	
 </script>

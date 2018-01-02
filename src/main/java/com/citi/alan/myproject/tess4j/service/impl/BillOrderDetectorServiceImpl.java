@@ -3,6 +3,7 @@ package com.citi.alan.myproject.tess4j.service.impl;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import com.citi.alan.myproject.tess4j.dao.OrderDetailDao;
 import com.citi.alan.myproject.tess4j.dao.UserInfoDao;
+import com.citi.alan.myproject.tess4j.dict.Dictionary;
 import com.citi.alan.myproject.tess4j.entity.Merchant;
 import com.citi.alan.myproject.tess4j.entity.OrderDetail;
 import com.citi.alan.myproject.tess4j.entity.UserInfo;
@@ -58,6 +60,7 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 	
 	private Map<String, Merchant> map = new HashMap<String, Merchant>();
 	
+	private DecimalFormat decimalFormat=new DecimalFormat(".00");
 	
 	@PostConstruct
 	public void loadMerchantMap() {
@@ -71,14 +74,19 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 	        if(userInfo==null){
 	            return billOrderDetails;
 	        }
-	        List<OrderDetail> orderDetails = orderDetailDao.findByUserInfo(userInfo);	      
+	        List<OrderDetail> orderDetails = orderDetailDao.findByUserInfoOrderByCreatedDateDesc(userInfo);	      
 	        if(orderDetails!=null){
 	            for (OrderDetail orderDetail : orderDetails) {
 	                BillOrderDetail billOrderDetail = new BillOrderDetail();
 	                BeanUtils.copyProperties(billOrderDetail, orderDetail);
+	                billOrderDetail.setActivityType(Dictionary.activityMap.get(orderDetail.getActivityType()));
+	                billOrderDetail.setTransferType(Dictionary.tranferMap.get(orderDetail.getTransferType()));
+	                billOrderDetail.setUserName(userInfo.getUserName());
+	                billOrderDetail.setNickName(userInfo.getNickName());
+	                billOrderDetail.setAlipayAccount(userInfo.getAlipayAccount());
 	                billOrderDetails.add(billOrderDetail);
 	            }
-
+ 
 	        }
 	    }catch(Exception se){
 	        se.printStackTrace();
@@ -92,7 +100,7 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 	    try {
             BeanUtils.copyProperties(orderDetail, billOrderDetail);
             Merchant merchant = map.get(billOrderDetail.getMerchantName());
-            billOrderDetail.setMerchantName(merchant.getMerchantName());
+            orderDetail.setMerchantName(merchant.getMerchantName());
             UserInfo userInfo = userInfoDao.findByMobile(billOrderDetail.getMobile());
             orderDetail.setUserInfo(userInfo);
             orderDetail.setCreatedDate(DateUtil.getFormatDateStr("yyyy/MM/dd HH:mm:ss"));
@@ -137,7 +145,7 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 	private void setUserInfoDetail(BillOrderDetail billOrderDetail, UserInfo userInfo, String activityType) {
 		String nickName = userInfo.getNickName();
 		String transferType = billOrderDetail.getTransferType();
-		billOrderDetail.setName(userInfo.getUserName());
+		billOrderDetail.setUserName(userInfo.getUserName());
 		billOrderDetail.setNickName(userInfo.getNickName());
 		billOrderDetail.setAlipayAccount(userInfo.getAlipayAccount());
 		String rate = "";
@@ -202,7 +210,6 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 			se.printStackTrace();
 		}
 
-		
 		try {
 			String merchantsOrderNum = resultMap.get("").replaceAll("o", "0");
 			billOrderDetail.setOrderNum(merchantsOrderNum);
@@ -222,9 +229,9 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 			if (!StringUtils.isEmpty(discountedPrice)) {
 				Float disPrice = Float.valueOf(discountedPrice);
 				actualAmount = actualAmount - disPrice;
-				billOrderDetail.setDiscountedPrice(disPrice);
+				billOrderDetail.setDiscountedPrice(decimalFormat.format(disPrice));
 			}
-			billOrderDetail.setActualPrice(actualAmount);
+			billOrderDetail.setActualPrice(decimalFormat.format(actualAmount));
 		} catch (Exception se) {
 			se.printStackTrace();
 		}
@@ -290,19 +297,16 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 		try {
 			String orderNum = resultMap.get("商户订单号").replaceAll("o", "0").replaceAll("O", "0");
 			billOrderDetail.setOrderNum(orderNum);
-			String merchantsNo = orderNum.substring(0, 12);
-			
-//			Merchant merchant = map.get(merchantsNo);
-//			billOrderDetail.setMerchantName(merchant.getMerchantName());		
+			String merchantsNo = orderNum.substring(0, 12);	
 			billOrderDetail.setMerchantName(merchantsNo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		try {
-			String orderAmount = resultMap.get("订单金额").replaceAll("o", "0").replaceAll(",", "");
+			String orderAmount = resultMap.get("订单金额").replaceAll("o", "0").replaceAll(",", "").replaceAll("，", "");
 			orderAmount = orderAmount.substring(0, orderAmount.indexOf(".")).replace(" ", "");
-			billOrderDetail.setActualPrice(Float.valueOf(orderAmount));
+			float orderPrice = Float.valueOf(orderAmount);
+			billOrderDetail.setActualPrice(decimalFormat.format(orderPrice));
 		} catch (Exception se) {
 			se.printStackTrace();
 		}
@@ -343,8 +347,6 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 			String orderNum = resultMap.get("商户订单号").replaceAll("o", "0").replaceAll("O", "0");
 			billOrderDetail.setOrderNum(orderNum);
 			String merchantsNo = orderNum.substring(0, 12);
-//			Merchant merchant = map.get(merchantsNo);
-//			billOrderDetail.setMerchantName(merchant.getMerchantName());
 			billOrderDetail.setMerchantName(merchantsNo);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -352,7 +354,8 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 
 		try {
 			String orderAmount = resultMap.get("订单金额").substring(1).replaceAll("o", "0").replaceAll(" ", "");
-			billOrderDetail.setActualPrice(Float.valueOf(orderAmount));
+			float orderPrice = Float.valueOf(orderAmount);
+			billOrderDetail.setActualPrice(decimalFormat.format(orderPrice));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

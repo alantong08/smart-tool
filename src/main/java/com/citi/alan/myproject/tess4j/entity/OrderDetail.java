@@ -1,7 +1,5 @@
 package com.citi.alan.myproject.tess4j.entity;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,8 +20,8 @@ public class OrderDetail {
     private String scanDate;
     private String orderNum;
     private String merchantName;
-    private Float actualPrice;
-    private Float discountedPrice;
+    private String actualPrice;
+    private String discountedPrice;
     private String transferType;
     private String activityType;
     private String rate;
@@ -60,20 +58,19 @@ public class OrderDetail {
         this.merchantName = merchantName;
     }
 
-
-	public Float getActualPrice() {
-        return actualPrice;
-    }
-    public void setActualPrice(Float actualPrice) {
-        this.actualPrice = actualPrice;
-    }
-    public Float getDiscountedPrice() {
-        return discountedPrice;
-    }
-    public void setDiscountedPrice(Float discountedPrice) {
-        this.discountedPrice = discountedPrice;
-    }
-    public String getTransferType() {
+    public String getActualPrice() {
+		return actualPrice;
+	}
+	public void setActualPrice(String actualPrice) {
+		this.actualPrice = actualPrice;
+	}
+	public String getDiscountedPrice() {
+		return discountedPrice;
+	}
+	public void setDiscountedPrice(String discountedPrice) {
+		this.discountedPrice = discountedPrice;
+	}
+	public String getTransferType() {
         return transferType;
     }
     public void setTransferType(String transferType) {

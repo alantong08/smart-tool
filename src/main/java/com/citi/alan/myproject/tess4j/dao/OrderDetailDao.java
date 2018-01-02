@@ -11,6 +11,6 @@ import com.citi.alan.myproject.tess4j.entity.UserInfo;
 @Repository
 public interface OrderDetailDao extends CrudRepository<OrderDetail, Long>{
     
-    public List<OrderDetail> findByUserInfo(UserInfo userInfo);
+    public List<OrderDetail> findByUserInfoOrderByCreatedDateDesc(UserInfo userInfo);
 
 }

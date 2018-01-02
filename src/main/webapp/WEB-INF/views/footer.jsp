@@ -6,19 +6,7 @@
          </div>
          <p class="weui-tabbar__label">主页</p>
        </a>
-       <a href="#tab2" class="weui-tabbar__item">
-         <div class="weui-tabbar__icon">
-           <img src="/weui/demos/images/icon_nav_msg.png" alt="">
-         </div>
-         <p class="weui-tabbar__label">通讯录</p>
-       </a>
-       <a href="#tab3" class="weui-tabbar__item">
-         <div class="weui-tabbar__icon">
-           <img src="/weui/demos/images/icon_nav_article.png" alt="">
-         </div>
-         <p class="weui-tabbar__label">发现</p>
-       </a>
-       <a href="#tab4" class="weui-tabbar__item">
+       <a href="/loginRegister/weuiMyself" class="weui-tabbar__item">
          <div class="weui-tabbar__icon">
            <img src="/weui/demos/images/icon_nav_cell.png" alt="">
          </div>

@@ -10,10 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.citi.alan.myproject.tess4j.entity.UserInfo;
 import com.citi.alan.myproject.tess4j.model.UserLoginDetail;
 import com.citi.alan.myproject.tess4j.service.api.UserInfoService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 @RequestMapping("/loginRegister")
 @RestController
 public class UserLoginController {
@@ -65,6 +68,45 @@ public class UserLoginController {
             e.printStackTrace();
         }
         return userLoginDetail;
+    }
+    
+    @RequestMapping(value = "/weuiMyself")
+	public ModelAndView loadUserInfo(HttpServletRequest request) throws JsonProcessingException {
+		ModelAndView mView = new ModelAndView("");
+		String viweName = null;
+		UserLoginDetail userLoginDetail = new UserLoginDetail();
+		try {
+			String mobile = (String) request.getSession().getAttribute("mobile");
+			UserInfo userInfo = userInfoService.getUserByMobile(mobile);
+			if (userInfo != null) {
+				BeanUtils.copyProperties(userLoginDetail, userInfo);
+				viweName = "/weui-myself";
+			} else {
+				viweName = "/weui-login";
+			}
+			mView.setViewName(viweName);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		String json = objectMapper.writeValueAsString(userLoginDetail);
+		mView.addObject("userInfo", json);
+		return mView;
+	}
+    
+    @RequestMapping(value = "/updateUserInfo", method = RequestMethod.POST)
+    public String updateUserInfo(@RequestParam Map<String, String> data, HttpServletRequest request) {      
+        String result = "";
+        try {
+            UserInfo userInfo = new UserInfo();
+            BeanUtils.populate(userInfo, data);
+            result = userInfoService.updateUserInfo(userInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
 }

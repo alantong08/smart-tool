@@ -12,5 +12,7 @@ public interface UserInfoService {
     
     public UserInfo getUserByMobile(String mobile);
     
+    public String updateUserInfo(UserInfo userInfo);
+    
     
 }

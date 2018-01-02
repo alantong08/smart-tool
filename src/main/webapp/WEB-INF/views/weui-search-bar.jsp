@@ -57,7 +57,7 @@
         </div>
         <div class="weui-form-preview__item">
           <label class="weui-form-preview__label">姓名</label>
-          <span class="weui-form-preview__value">${item.name}</span>
+          <span class="weui-form-preview__value">${item.userName}</span>
         </div>
         <div class="weui-form-preview__item">
           <label class="weui-form-preview__label">群昵称</label>
@@ -93,6 +93,7 @@
 	</c:forEach>
 	    </c:otherwise>
 	</c:choose>	
+	<br><br>
     <%@ include file="footer.jsp"%>
 <script src="/lib/jquery-2.1.4.js"></script>
 <script src="/lib/fastclick.js"></script>
@@ -106,12 +107,6 @@
 
 	$(document).ready(function() {
 		$("#mobile").val('${mobileNo}');
-	});
-
-	$("#mobile").keypress(function(event) {
-		if (event.keyCode === 13) {
-			searchResult();
-		}
 	});
 	
 	$("#searchButton").click(function() {
