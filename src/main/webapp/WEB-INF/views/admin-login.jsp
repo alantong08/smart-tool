@@ -18,7 +18,7 @@
 	$(function() {
 		$('#loginForm').submit(function(){
 		    $.ajax({
-		      url: '/loginRegister/login',
+		      url: '/admin/login',
 		      type: 'POST',
 		      data : $('#loginForm').serialize(),
 		      success: function(response){
@@ -38,7 +38,7 @@
 	<div class="easyui-navpanel">
 		<header>
 			<div class="m-toolbar">
-				<span class="m-title">登陆报单系统</span>
+				<span class="m-title">登陆报单管理系统</span>
 			</div>
 		</header>
 
@@ -49,29 +49,25 @@
 		</div>
 
 		<form id="loginForm">
-			<div style="padding: 0 20px">
+			<div style="text-align: center;padding: 0 20px">
 				<div style="margin-bottom: 10px">
 					<input id="mobile" name="mobile" class="easyui-numberbox"
 						data-options="prompt:'请输入手机号',iconCls:'icon-man'"
-						data-options="required:true" style="width: 100%; height: 38px">
+						data-options="required:true" style="width: 50%; height: 38px" value="18918297673">
 				</div>
 				<div>
 					<input id="password" name="password" class="easyui-passwordbox"
-						data-options="prompt:'请输入密码'" style="width: 100%; height: 38px">
+						data-options="prompt:'请输入密码'" style="width: 50%; height: 38px" value="222222">
 				</div>
 				<div style="text-align: center; margin-top: 10px">
 					<span id="message"></span>
 				</div>
 				<div style="text-align: center; margin-top: 30px">
 					<a id="submit" onclick="$('#loginForm').submit()"
-						class="easyui-linkbutton" style="width: 100%; height: 40px"><span
+						class="easyui-linkbutton" style="width: 10%; height: 40px"><span
 						style="font-size: 16px">登陆</span></a>
 				</div>
-				<div style="text-align: center; margin-top: 30px">
-					<a href="/register" id="register" class="easyui-linkbutton"
-						style="width: 100px; height: 35px"><span
-						style="font-size: 16px">注册</span></a>
-				</div>
+
 			</div>
 		</form>
 	</div>

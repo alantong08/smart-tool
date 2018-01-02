@@ -6,8 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 @Controller
 public class IndexController {
     
@@ -19,6 +17,20 @@ public class IndexController {
     	else
     		return "tabbar";
     }
+    
+    
+    
+    @RequestMapping(value={"adminLogin"})
+    public String adminLogin(){
+        return "admin-login";
+    }
+    
+    
+    @RequestMapping(value={"/admin/home"})
+    public String admin(){
+        return "/admin/home";
+    }
+    
     
     
     @RequestMapping(value={"register"})

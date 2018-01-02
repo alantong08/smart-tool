@@ -13,4 +13,6 @@ public interface BillOrderDetectorService {
     public boolean saveOrderDetail(BillOrderDetail billOrderDetail);
     
     public List<BillOrderDetail> getBillOrderDetailList(String mobile);
+    
+    public List<BillOrderDetail> getAllBillOrderDetailList();
 }

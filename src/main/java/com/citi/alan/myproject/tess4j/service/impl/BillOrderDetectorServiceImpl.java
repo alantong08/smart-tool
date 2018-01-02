@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,6 +94,32 @@ public class BillOrderDetectorServiceImpl implements BillOrderDetectorService {
 	    }
 	    return billOrderDetails;
 	}
+	
+	 public List<BillOrderDetail> getAllBillOrderDetailList(){
+	     List<OrderDetail> orderDetails = orderDetailDao.findAll();
+	    
+	     List<BillOrderDetail> billOrderDetails = new ArrayList<BillOrderDetail>();
+	     try{
+	         if(orderDetails!=null){
+	             Collections.sort(orderDetails, (o1, o2) -> o2.getCreatedDate().compareTo(o1.getCreatedDate()));
+	             for (OrderDetail orderDetail : orderDetails) {
+	                 BillOrderDetail billOrderDetail = new BillOrderDetail();
+	                 BeanUtils.copyProperties(billOrderDetail, orderDetail);
+	                 billOrderDetail.setActivityType(Dictionary.activityMap.get(orderDetail.getActivityType()));
+	                 billOrderDetail.setTransferType(Dictionary.tranferMap.get(orderDetail.getTransferType()));
+	                 billOrderDetail.setUserName(orderDetail.getUserInfo().getUserName());
+	                 billOrderDetail.setNickName(orderDetail.getUserInfo().getNickName());
+	                 billOrderDetail.setAlipayAccount(orderDetail.getUserInfo().getAlipayAccount());
+	                 billOrderDetails.add(billOrderDetail);
+	             }
+
+	         }
+	     }catch(Exception se){
+	         se.printStackTrace();
+	     }
+	     return billOrderDetails;
+
+	 }
 	
 	public boolean saveOrderDetail(BillOrderDetail billOrderDetail){
 	    OrderDetail orderDetail = new OrderDetail();
