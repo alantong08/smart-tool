@@ -53,7 +53,9 @@ public class AdminController {
     
     @RequestMapping(value = "/getOrderList")
     public List<BillOrderDetail> getOrderList(HttpServletRequest request ) {
-    
+        String scanDate=request.getParameter("scanDate");
+        String name=request.getParameter("name");
+        System.out.println("scanDate:"+scanDate+" name:"+name);
          List<BillOrderDetail> billOrderDetails = new ArrayList<>();
         try { 
             billOrderDetails = billOrderDetectorService.getAllBillOrderDetailList();
@@ -64,17 +66,17 @@ public class AdminController {
         return billOrderDetails;
     }
     
-    @RequestMapping(value = "/saveOrderList")
-    public List<BillOrderDetail> saveOrderList(HttpServletRequest request ) {
-    
-         List<BillOrderDetail> billOrderDetails = new ArrayList<>();
+    @RequestMapping(value = "/saveOrder")
+    public String saveOrderList(BillOrderDetail billOrderDetail, HttpServletRequest request ) { 
         try { 
-            billOrderDetails = billOrderDetectorService.getAllBillOrderDetailList();
+            
+            Boolean flag = billOrderDetectorService.saveOrderDetail(billOrderDetail);
+            System.out.println(flag);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return billOrderDetails;
+        return "success";
     }
 
 }

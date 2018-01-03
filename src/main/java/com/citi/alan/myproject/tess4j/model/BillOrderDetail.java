@@ -21,6 +21,8 @@ public class BillOrderDetail implements Serializable{
     private String comments;
     private String alipayAccount;
     private String mobile;
+    private String createdDate;
+    private Integer id;
     
 
     public String getScanDate() {
@@ -113,6 +115,22 @@ public class BillOrderDetail implements Serializable{
     }
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+    
+    
+    public String getCreatedDate() {
+        return createdDate;
+    }
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
+    }
+    
+    
+    public Integer getId() {
+        return id;
+    }
+    public void setId(Integer id) {
+        this.id = id;
     }
     @Override
     public String toString(){
