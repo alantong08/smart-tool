@@ -12,7 +12,15 @@ import org.springframework.context.annotation.PropertySource;
 })
 @SpringBootApplication
 public class App {
+    
+    
+    static {
+        nu.pattern.OpenCV.loadShared();
+        System.loadLibrary(org.opencv.core.Core.NATIVE_LIBRARY_NAME);
+      }
+    
     public static void main(String[] args) throws Exception {
+
         SpringApplication.run(App.class, args);  
     }
     

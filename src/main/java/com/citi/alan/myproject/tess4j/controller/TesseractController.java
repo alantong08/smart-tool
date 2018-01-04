@@ -52,6 +52,7 @@ public class TesseractController {
 	@ResponseBody
 	public ModelAndView handleUploadFile(HttpServletRequest request) throws JsonProcessingException {
 		BillOrderDetail detail = null;
+		String viewName = "";
 		try {
 			String activityType = request.getParameter("activityType");
 			MultipartFile multipart = ((MultipartHttpServletRequest) request).getFile("file-order");
@@ -66,12 +67,14 @@ public class TesseractController {
 				//Thumbnails.of(convFile).size(800, 1000).toFile(newFile);
 				multipart.transferTo(newFile);
 				detail = billOrderDetectorService.detetctBillOrderDetail(newFile, activityType, user);
+				viewName="weui-confirm";
 			}
 		} catch (Exception se) {
 			se.printStackTrace();
+			viewName="weui-500";
 		}
 
-		ModelAndView mView = new ModelAndView("weui-confirm");
+		ModelAndView mView = new ModelAndView(viewName);
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json = objectMapper.writeValueAsString(detail);
 		mView.addObject("billDetail",json);

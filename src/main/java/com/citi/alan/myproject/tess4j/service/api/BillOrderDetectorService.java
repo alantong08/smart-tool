@@ -14,5 +14,9 @@ public interface BillOrderDetectorService {
     
     public List<BillOrderDetail> getBillOrderDetailList(String mobile);
     
-    public List<BillOrderDetail> getAllBillOrderDetailList();
+    public List<BillOrderDetail> getBillOrderDetailList(String userName, String scanDate);
+    
+    public boolean updateOrderDetail(BillOrderDetail billOrderDetail) ;
+    
+   
 }

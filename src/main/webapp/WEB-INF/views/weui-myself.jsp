@@ -58,7 +58,21 @@
 					<input class="weui-input" id="nickName" name="nickName" type="text" >
 				</div>
 			</div>
-			
+			<div class="weui-cell">
+				<div class="weui-cell__hd">
+					<label class="weui-label">所在组</label>
+				</div>
+			 <div class="weui-cell__bd">	          
+		          <select class="weui-select" id="groupName" name="groupName">
+						<option value="高级群">高级群</option>
+						<option value="中级群">中级群</option>
+						<option value="初级群">初级群</option>
+						<option value="入门群">入门群</option>
+						<option value="会计群">会计群</option>
+		          </select>
+		    </div>
+			</div>
+
 			<div class="weui-cell">
 				<div class="weui-cell__hd">
 					<label class="weui-label">支付宝</label>
@@ -93,6 +107,7 @@ $(document).ready(function() {
 		$("#userName").val(userInfo.userName);
 		$("#password").val(userInfo.password);
 		$("#nickName").val(userInfo.nickName);
+		$("#groupName").val(userInfo.groupName);
 		$("#alipayAccount").val(userInfo.alipayAccount);
 	}
 });

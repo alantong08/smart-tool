@@ -61,6 +61,7 @@ public class UserInfoServiceImpl implements UserInfoService{
         		storedUserInfo.setAlipayAccount(userInfo.getAlipayAccount());
         		storedUserInfo.setNickName(userInfo.getNickName());
         		storedUserInfo.setPassword(userInfo.getPassword());
+        		storedUserInfo.setGroupName(userInfo.getGroupName());
         		userInfoDao.save(storedUserInfo);
         		result = "success";
         }else{

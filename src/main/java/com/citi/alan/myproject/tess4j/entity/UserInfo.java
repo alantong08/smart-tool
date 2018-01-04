@@ -36,12 +36,16 @@ public class UserInfo {
     private String mobile;
     @Column(name = "enabled")
     private Integer enabled=1;
+    @Column(name = "groupName")
+    private String groupName;
+    
     @OneToMany(mappedBy = "userInfo", cascade = CascadeType.ALL)
     private Set<OrderDetail> orderDetails;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+
 
     public UserInfo(){};
     
@@ -121,6 +125,14 @@ public class UserInfo {
         this.orderDetails = orderDetails;
     }
     
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
 
     @Override
     public String toString() {

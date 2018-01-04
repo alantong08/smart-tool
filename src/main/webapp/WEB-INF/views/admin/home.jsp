@@ -28,8 +28,9 @@
         <thead>
             <tr>
                 <th field="id" hidden="true">ID</th>
-                <th field="userName" width="50" editor="{type:'validatebox',options:{required:true}}">姓名</th>
+                <th field="userName" width="30" editor="{type:'validatebox',options:{required:true}}">姓名</th>
                 <th field="nickName" width="50" editor="{type:'validatebox',options:{required:true}}">群昵称</th>
+                 <th field="groupName" width="50" editor="{type:'validatebox',options:{required:true}}">所在群</th>
                 <th field="scanDate" width="50" editor="{type:'validatebox',options:{required:true}}">扫码日期</th>
                 <th field="orderNum" width="100" editor="{type:'validatebox',options:{required:true,validType:'number'}}">订单号</th>
                 <th field="merchantName" width="50" editor="{type:'validatebox',options:{required:true}}">商户名</th>
@@ -54,6 +55,27 @@
     </div>
 <script type="text/javascript">
   	$(function() {
+  		$('.easyui-datebox').datebox({
+  	        formatter : function(date){
+  	            var y = date.getFullYear();
+  	            var m = date.getMonth()+1;
+  	            var d = date.getDate();
+  	            return y+'-'+ (m < 10 ? '0' + m : m)+'-'+ (d < 10 ? '0' + d : d);
+  	        },
+  	        parser : function(s){
+  	            if (!s) return new Date();
+  	            var ss = s.split('-');
+  	            var y = parseInt(ss[0],10);
+  	            var m = parseInt(ss[1],10);
+  	            var d = parseInt(ss[2],10);
+  	            if (!isNaN(y) && !isNaN(m) && !isNaN(d)){
+  	                return new Date(y,m-1,d)
+  	            } else {
+  	                return new Date();
+  	            }
+  	        }
+
+  	    });
   		
   		$("#orderEDataGridAutoSave").initEdatagrid({
   			url : "/admin/getOrderList",

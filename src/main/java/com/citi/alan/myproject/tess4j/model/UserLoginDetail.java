@@ -10,7 +10,16 @@ public class UserLoginDetail {
     private boolean isRegistered;
     private String message;
     private String view;
+    private String groupName;
     
+    
+
+    public String getGroupName() {
+        return groupName;
+    }
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
     public String getUserName() {
         return userName;
     }

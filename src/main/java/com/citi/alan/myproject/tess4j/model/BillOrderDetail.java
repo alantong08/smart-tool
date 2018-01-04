@@ -23,8 +23,16 @@ public class BillOrderDetail implements Serializable{
     private String mobile;
     private String createdDate;
     private Integer id;
+    private String groupName;
+    
     
 
+    public String getGroupName() {
+        return groupName;
+    }
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
     public String getScanDate() {
         return scanDate;
     }
